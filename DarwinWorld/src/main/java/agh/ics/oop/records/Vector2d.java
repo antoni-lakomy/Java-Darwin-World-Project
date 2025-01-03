@@ -1,40 +1,24 @@
-package agh.ics.oop.model;
+package agh.ics.oop.records;
 
-import java.util.Objects;
+public record Vector2d(int x, int y) {
 
-public class Vector2d {
-    private final int x, y;
-
-    public Vector2d(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public String toString(){
+    public String toString() {
         return "(" + this.x + "," + this.y + ")";
     }
 
-    public boolean precedes(Vector2d other){
+    public boolean precedes(Vector2d other) {
         return (this.x <= other.x) && (this.y <= other.y);
     }
 
-    public boolean follows(Vector2d other){
+    public boolean follows(Vector2d other) {
         return (this.x >= other.x) && (this.y >= other.y);
     }
 
-    public Vector2d add(Vector2d other){
+    public Vector2d add(Vector2d other) {
         return new Vector2d(this.x + other.x, this.y + other.y);
     }
 
-    public Vector2d subtract(Vector2d other){
+    public Vector2d subtract(Vector2d other) {
         return new Vector2d(this.x - other.x, this.y - other.y);
     }
 
@@ -51,20 +35,15 @@ public class Vector2d {
     }
 
     @Override
-    public boolean equals(Object other){
-        if(this == other){
+    public boolean equals(Object other) {
+        if (this == other) {
             return true;
         }
-        if(!(other instanceof Vector2d)){
+        if (!(other instanceof Vector2d(int x1, int y1))) {
             return false;
         }
-        Vector2d that = (Vector2d) other;
 
-        return this.x == that.x && this.y == that.y;
+        return this.x == x1 && this.y == y1;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.x, this.y);
-    }
 }
