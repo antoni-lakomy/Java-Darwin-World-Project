@@ -2,10 +2,11 @@ package agh.ics.oop.organisms;
 
 import agh.ics.oop.records.Vector2d;
 
-public abstract class AbstractOrganism {
+public class Organism {
+
     protected Vector2d position;
 
-    public AbstractOrganism(Vector2d position) {
+    public Organism(Vector2d position) {
         this.position = position;
     }
 
@@ -17,6 +18,4 @@ public abstract class AbstractOrganism {
         this.position = position;
     }
 
-    public abstract void interact(AbstractOrganism other);
-    // leaves space for any future interaction implementation
 }

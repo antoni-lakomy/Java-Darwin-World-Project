@@ -1,6 +1,6 @@
 package agh.ics.oop.maps;
 
-import agh.ics.oop.organisms.AbstractOrganism;
+import agh.ics.oop.organisms.Organism;
 import agh.ics.oop.records.Vector2d;
 
 import java.util.*;
@@ -8,7 +8,7 @@ import java.util.*;
 public class WorldMap implements WorldMapInterface {
     private final int width;
     private final int height;
-    private final Map<Vector2d, List<AbstractOrganism>> map;
+    private final Map<Vector2d, List<Organism>> map;
 
     public WorldMap(int width, int height) {
         this.width = width;
@@ -34,17 +34,17 @@ public class WorldMap implements WorldMapInterface {
     }
 
     @Override
-    public List<AbstractOrganism> getOrganismsAt(Vector2d position) {
+    public List<Organism> getOrganismsAt(Vector2d position) {
         return map.get(position);
     }
 
     @Override
-    public void addOrganism(AbstractOrganism organism) {
+    public void addOrganism(Organism organism) {
         map.get(organism.getPosition()).add(organism);
     }
 
     @Override
-    public void removeOrganism(AbstractOrganism organism) {
+    public void removeOrganism(Organism organism) {
         map.get(organism.getPosition()).remove(organism);
     }
 
@@ -56,9 +56,9 @@ public class WorldMap implements WorldMapInterface {
         return height;
     }
 
-    public void moveOrganism(AbstractOrganism organism, Vector2d newPosition) {
-        List<AbstractOrganism> currentField = map.get(organism.getPosition());
-        List<AbstractOrganism> newField = map.get(newPosition);
+    public void moveOrganism(Organism organism, Vector2d newPosition) {
+        List<Organism> currentField = map.get(organism.getPosition());
+        List<Organism> newField = map.get(newPosition);
 
         currentField.remove(organism);
         organism.setPosition(newPosition);
