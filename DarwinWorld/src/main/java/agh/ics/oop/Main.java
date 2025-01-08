@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world");
 
-        SimParams params = new SimParams(123,0,0,
+        SimParams params = new SimParams(11,0,0,
                                 0,0,0,
                             0,0,0,
                         50,0,20,
@@ -32,5 +32,8 @@ public class Main {
         System.out.println(Arrays.toString(c.getGenome()));
         System.out.println(a.getChildren());
 
+        Animal rand = builder.buildFresh(new Vector2d(2,2));
+
+        System.out.println(Arrays.toString(rand.getGenome()));
     }
 }
