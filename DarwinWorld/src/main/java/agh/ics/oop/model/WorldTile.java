@@ -26,7 +26,7 @@ public class WorldTile {
     /**
      * Checks if the tile is empty.
      *
-     * @return true - if the tile does not contain any plant or animal,
+     * @return true - if the tile does not contain any {@link Plant} or {@link Animal},
      *         otherwise false.
      */
     public boolean isEmpty(){
@@ -39,7 +39,7 @@ public class WorldTile {
      * returns the strongest animal on the tile.
      * If there are no animals returns the plant if present, otherwise null.
      *
-     * @return The first organism on this tile.
+     * @return The first {@link Organism} on this tile.
      *
      * @throws IllegalStateException if the tile is not sorted beforehand.
      */
@@ -53,7 +53,7 @@ public class WorldTile {
      * Adds an animal to the tile.
      * Breaks sorting.
      *
-     * @param animal Animal to be added to the map.
+     * @param animal {@link Animal} to be added to the map.
      */
     public void addAnimal(Animal animal) {
         animals.add(animal);
@@ -64,12 +64,37 @@ public class WorldTile {
      * Removes an animal from the map.
      * Retains sorting.
      *
-     * @param animal Animal to be added to the map.
+     * @param animal {@link Animal} to be added to the map.
      *
      * @return true - if the tile contained the provided animal.
      */
     public boolean removeAnimal(Animal animal){
         return animals.remove(animal);
+    }
+
+    /**
+     * Adds a plant to the tile.
+     * The tile must not have a plant already.
+     *
+     * @param plant {@link Plant} to be added to the map.
+     *
+     * @throws IllegalStateException if there already is a plant on the tile
+     */
+    public void addPlant(Plant plant){
+        if (this.plant != null)
+            throw new IllegalStateException("Trying to add a plant to an already occupied tile");
+        this.plant = plant;
+    }
+
+    /**
+     * Removes the plant on the tile if not already empty.
+     *
+     * @return true - if there was a plant to remove, otherwise false
+     */
+    public boolean removePlant(){
+        if (this.plant == null) return false;
+        this.plant = null;
+        return true;
     }
 
     /**
