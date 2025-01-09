@@ -57,14 +57,20 @@ public class WorldMap implements WorldMapInterface {
         return height;
     }
 
+    public Vector2d boundPosition(Vector2d position){
+        if (position.x() >= width) position = new Vector2d(0,position.y());
+        if (position.x() < 0) position = new Vector2d(width-1, position.y());
+        if (position.y() >= width) position = new Vector2d(position.x(),height-1);
+        if (position.y() < 0) position = new Vector2d(position.x(),0);
+        return position;
+    }
+
+
     public void moveAnimal(Animal animal) {
-        Vector2d moveVector = animal.activateGene(geneInterpreter);
+        Vector2d moveVector = animal.activateGene(geneInterpreter,1);
         Vector2d oldPosition = animal.getPosition();
         Vector2d newPosition = animal.getPosition().add(moveVector);
-        if (newPosition.x() >= width) newPosition = new Vector2d(0,newPosition.y());
-        if (newPosition.x() < 0) newPosition = new Vector2d(width-1, newPosition.y());
-        if (newPosition.y() >= width) newPosition = new Vector2d(newPosition.x(),height-1);
-        if (newPosition.y() < 0) newPosition = new Vector2d(newPosition.x(),0);
+        newPosition = boundPosition(newPosition);
 
         if (!map[oldPosition.x()][oldPosition.y()].removeAnimal(animal))
             throw new NullPointerException("Animal was not present on the map");
