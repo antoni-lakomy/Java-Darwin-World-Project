@@ -1,6 +1,7 @@
 package agh.ics.oop.organisms;
 
 import agh.ics.oop.enums.MapDirection;
+import agh.ics.oop.model.GeneInterpreter;
 import agh.ics.oop.records.Vector2d;
 
 import java.util.List;
@@ -48,10 +49,10 @@ public class Animal extends Organism{
         return orientation.toString();
     }
 
-    //TODO - modularna losowość ze starości nie radości
-    public Vector2d activateGene(){
+
+    public Vector2d activateGene(GeneInterpreter interpreter){
         orientation = orientation.rotate(genome[currentGene]);
-        currentGene = (currentGene + 1) % genome.length;
+        currentGene = interpreter.getNextGene(this);
         return orientation.toUnitVector();
     }
 

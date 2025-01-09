@@ -48,7 +48,7 @@ public class Main {
 
         for (int i = 0; i < 20; i++){
             System.out.println(visualizer.draw(new Vector2d(0,0),new Vector2d(4,4)));
-            
+
             worldMap.moveAnimal(animals.get(i % 3));
         }
 

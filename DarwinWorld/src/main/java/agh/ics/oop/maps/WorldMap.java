@@ -1,5 +1,7 @@
 package agh.ics.oop.maps;
 
+import agh.ics.oop.model.FullPredestination;
+import agh.ics.oop.model.GeneInterpreter;
 import agh.ics.oop.model.WorldTile;
 import agh.ics.oop.organisms.Animal;
 import agh.ics.oop.organisms.Organism;
@@ -11,6 +13,7 @@ public class WorldMap implements WorldMapInterface {
     private final int width;
     private final int height;
     private final WorldTile[][] map;
+    private final GeneInterpreter geneInterpreter = new FullPredestination();
 
     public WorldMap(int width, int height) {
         this.width = width;
@@ -55,7 +58,7 @@ public class WorldMap implements WorldMapInterface {
     }
 
     public void moveAnimal(Animal animal) {
-        Vector2d moveVector = animal.activateGene();
+        Vector2d moveVector = animal.activateGene(geneInterpreter);
         Vector2d oldPosition = animal.getPosition();
         Vector2d newPosition = animal.getPosition().add(moveVector);
         if (newPosition.x() >= width) newPosition = new Vector2d(0,newPosition.y());
