@@ -39,4 +39,24 @@ public class Animal extends Organism{
         super(position);
     }
 
+    public void addEnergy(int energy){
+        this.energy += energy;
+    }
+
+    @Override
+    public String toString(){
+        return orientation.toString();
+    }
+
+    //TODO - modularna losowość ze starości nie radości
+    public Vector2d activateGene(){
+        orientation = orientation.rotate(genome[currentGene]);
+        currentGene = (currentGene + 1) % genome.length;
+        return orientation.toUnitVector();
+    }
+
+    public void setPosition(Vector2d position){
+        this.position = position;
+    }
+
 }
