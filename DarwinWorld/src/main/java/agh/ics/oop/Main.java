@@ -3,8 +3,11 @@ package agh.ics.oop;
 
 import agh.ics.oop.maps.Globe;
 import agh.ics.oop.maps.WorldMap;
+import agh.ics.oop.model.FullPredestination;
 import agh.ics.oop.organisms.Animal;
 import agh.ics.oop.organisms.AnimalBuilder;
+import agh.ics.oop.planters.ForestedEquators;
+import agh.ics.oop.planters.Planter;
 import agh.ics.oop.records.SimParams;
 import agh.ics.oop.records.Vector2d;
 import agh.ics.oop.util.MapVisualizer;
@@ -37,10 +40,14 @@ public class Main {
         animals.add(b);
         animals.add(c);
 
-        WorldMap worldMap = new Globe(5,5);
+        WorldMap worldMap = new Globe(5,5, new FullPredestination());
         worldMap.addAnimal(a);
         worldMap.addAnimal(b);
         worldMap.addAnimal(c);
+
+        Planter planter = new ForestedEquators(worldMap,20,11);
+
+        planter.plant(20);
 
         MapVisualizer visualizer = new MapVisualizer(worldMap);
 

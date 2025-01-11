@@ -2,10 +2,14 @@ package agh.ics.oop.maps;
 
 import agh.ics.oop.organisms.Animal;
 import agh.ics.oop.organisms.Organism;
+import agh.ics.oop.organisms.Plant;
 import agh.ics.oop.records.Vector2d;
 
 public interface WorldMap {
 
+    int getWidth();
+
+    int getHeight();
 
     /**
      * Checks if the tile on the given position is empty.
@@ -38,6 +42,16 @@ public interface WorldMap {
      */
     void removeAnimal(Animal animal);
 
+    /**
+     * Adds a plant to the map.
+     * Throws an exception if there already is a plant on this spot on the map.
+     *
+     * @param plant {@link Plant} to be added.
+     *
+     * @throws IllegalStateException if there already is a plant
+     *                               on the same position on the map.
+     */
+    void addPlant(Plant plant);
 
     /**
      * Binds the provided position to the map borders including
