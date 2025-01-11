@@ -11,4 +11,6 @@ public interface Planter {
      * @param numberToPlant A number of plants to plant.
      */
     void plant(int numberToPlant);
+
+    void consume();
 }

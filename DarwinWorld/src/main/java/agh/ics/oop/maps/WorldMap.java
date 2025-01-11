@@ -5,6 +5,8 @@ import agh.ics.oop.organisms.Organism;
 import agh.ics.oop.organisms.Plant;
 import agh.ics.oop.records.Vector2d;
 
+import java.util.List;
+
 public interface WorldMap {
 
     int getWidth();
@@ -72,4 +74,15 @@ public interface WorldMap {
      * @throws NullPointerException if the animal was not present on the map.
      */
     void moveAnimal(Animal animal);
+
+
+    /**
+     * Initiates the consumption faze of the simulation.
+     * Tries to consume plants on every tile of the map.
+     * The spots where the plant was successfully consumed
+     * are returned as a list of positions.
+     *
+     * @return A list of positions on the map where a plant was successfully consumed.
+     */
+    List<Vector2d> consumePlants();
 }
