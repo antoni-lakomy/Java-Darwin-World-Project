@@ -5,17 +5,19 @@ import agh.ics.oop.model.GeneInterpreter;
 import agh.ics.oop.model.WorldTile;
 import agh.ics.oop.organisms.Animal;
 import agh.ics.oop.organisms.Organism;
+import agh.ics.oop.organisms.Plant;
 import agh.ics.oop.records.Vector2d;
 
 public class Globe implements WorldMap {
     private final int width;
     private final int height;
     private final WorldTile[][] map;
-    private final GeneInterpreter geneInterpreter = new FullPredestination();
+    private final GeneInterpreter geneInterpreter;
 
-    public Globe(int width, int height) {
+    public Globe(int width, int height,GeneInterpreter geneInterpreter) {
         this.width = width;
         this.height = height;
+        this.geneInterpreter = geneInterpreter;
         this.map = new WorldTile[width][height];
         for (int x = 0; x < width; x++){
             for (int y = 0; y < height; y++){
@@ -45,6 +47,12 @@ public class Globe implements WorldMap {
     public void removeAnimal(Animal animal) {
         Vector2d poz = animal.getPosition();
         map[poz.x()][poz.y()].removeAnimal(animal);
+    }
+
+    @Override
+    public void addPlant(Plant plant) {
+        Vector2d poz = plant.getPosition();
+        map[poz.x()][poz.y()].addPlant(plant);
     }
 
     public int getWidth() {
