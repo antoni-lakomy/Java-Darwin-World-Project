@@ -18,6 +18,8 @@ public class AnimalBuilder {
 
     private final int directions;
 
+    private final int startingEnergy;
+
     private final int reproductionCost;
 
     private final int maxMutation;
@@ -28,12 +30,29 @@ public class AnimalBuilder {
         this.rng = new Random(params.seed());
         this.genomeLength = params.animalGenomeLength();
         this.directions = MapDirection.values().length;
+        this.startingEnergy = params.animalStartEnergy();
         this.reproductionCost = params.animalReproductionCost();
         this.minMutation = params.animalMinMutation();
         this.maxMutation = params.animalMaxMutation();
     }
 
+    /**
+     * Creates a new animal at a given position, with a given energy and genome.
+     * Used mostly as an internal function, but is made available for testing purposes.
+     * It has no children and no parents and its age is set to 0.
+     *
+     * @param position The starting position of the new animal.
+     * @param energy The starting energy of the animal.
+     * @param genome The genome of the animal.
+     *
+     * @throws IllegalArgumentException if the length of the provided genome
+     * is not equal to the animalGenomeLength parameter of this builder
+     *
+     * @return A new Animal object with the given specs.
+     */
     public Animal buildBase(Vector2d position, int energy, Byte[] genome){
+        if (genome.length != genomeLength)
+            throw new IllegalArgumentException("The provided genome is incompatible with this builders specs");
 
         Animal animal = new Animal(position);
         animal.orientation = MapDirection.values()[rng.nextInt(directions)];
@@ -45,33 +64,30 @@ public class AnimalBuilder {
         animal.genome = genome;
 
         animal.children = new LinkedList<>();
+        animal.parents = new ArrayList<>();
 
         return  animal;
     }
 
     /**
-     * Creates a fresh new animal at a given position with a given energy.
+     * Creates a fresh new animal at a given position.
      * The resulting animal has a random genome, is turned in a random direction,
      * and has a random gene active. It also has no parents and no children.
+     * Its starting energy and genome length is based on the parameters provided to this builder.
      * Its age is also set to 0.
      *
      * @param position The starting position of the new animal.
-     * @param energy The starting energy of the new animal.
      *
      * @return A new Animal object with the given specs.
      */
-    public Animal buildFresh(Vector2d position, int energy){
+    public Animal buildFresh(Vector2d position){
 
         Byte[] freshGenome = new Byte[genomeLength];
         for (int i = 0; i < genomeLength; i++){
             freshGenome[i] = (byte)rng.nextInt(directions);
         }
 
-        Animal animal = buildBase(position,energy,freshGenome);
-
-        animal.parents = new ArrayList<>();
-
-        return animal;
+        return buildBase(position,startingEnergy,freshGenome);
     }
 
 
