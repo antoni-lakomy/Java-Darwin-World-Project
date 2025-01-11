@@ -59,7 +59,6 @@ public class ForestedEquators implements Planter{
             } else {
                 vectorsToPlant.add(poz);
             }
-            i++;
         }
 
         for (Vector2d spot : vectorsToPlant.stream().toList()){
@@ -77,6 +76,8 @@ public class ForestedEquators implements Planter{
 
         preferredTiles = new ArrayList<>(plantFromList(preferred,preferredTiles));
 
-        normalTiles = new ArrayList<>(plantFromList(numberToPlant - preferred,normalTiles));
+        int normal = Math.min(normalTiles.size(),numberToPlant - preferred);
+
+        normalTiles = new ArrayList<>(plantFromList(normal,normalTiles));
     }
 }
