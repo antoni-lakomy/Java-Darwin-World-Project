@@ -4,6 +4,11 @@ import agh.ics.oop.organisms.Animal;
 
 import java.util.Comparator;
 
+/**
+ * A singleton class used for sorting the {@link Animal} objects in the correct order,
+ * from the strongest to the weakest.
+ * Its single instance can be used as a {@link Comparator} where needed.
+ */
 public class AnimalComparator implements Comparator<Animal> {
 
     private AnimalComparator(){};
@@ -17,6 +22,14 @@ public class AnimalComparator implements Comparator<Animal> {
         return animal2.getChildren().size() - animal1.getChildren().size();
     }
 
+    /**
+     * Returns the single instance of this object to be passed to another function.
+     * This is the only way to use this {@link Comparator} as its object cannon
+     * be created using a constructor.
+     * It should be thread and memory safe.
+     *
+     * @return The single instance of {@link AnimalComparator} object.
+     */
     public static AnimalComparator getInstance(){
         if (instance == null){
             synchronized (AnimalComparator.class){

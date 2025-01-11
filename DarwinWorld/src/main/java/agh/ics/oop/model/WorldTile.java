@@ -1,6 +1,6 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.maps.WorldMapInterface;
+import agh.ics.oop.maps.WorldMap;
 import agh.ics.oop.organisms.Animal;
 import agh.ics.oop.organisms.AnimalBuilder;
 import agh.ics.oop.organisms.Organism;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A single tile on the {@link WorldMapInterface}.
+ * A single tile on the {@link WorldMap}.
  * Contains a spot for a single {@link Plant} and a list of {@link Animal} objects.
  * Provides methods for basic {@link Animal} behaviour on the tile
  * like eating the plant or multiplying.
