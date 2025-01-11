@@ -1,6 +1,7 @@
 package agh.ics.oop.maps;
 
 import agh.ics.oop.organisms.Animal;
+import agh.ics.oop.organisms.AnimalBuilder;
 import agh.ics.oop.organisms.Organism;
 import agh.ics.oop.organisms.Plant;
 import agh.ics.oop.records.Vector2d;
@@ -85,4 +86,16 @@ public interface WorldMap {
      * @return A list of positions on the map where a plant was successfully consumed.
      */
     List<Vector2d> consumePlants();
+
+    /**
+     * Initiates the reproduction faze of the simulation.
+     * Tries to reproduce animals on every tile of the map.
+     * The newly created children are returned as a list.
+     *
+     * @param animalBuilder The {@link AnimalBuilder} used for reproduction of the animals.
+     * @param animalFedThreshold The amount of energy animal has to have to be considered fed.
+     *
+     * @return A list of children created in this faze.
+     */
+    List<Animal> reproduceAnimals(AnimalBuilder animalBuilder,int animalFedThreshold);
 }
