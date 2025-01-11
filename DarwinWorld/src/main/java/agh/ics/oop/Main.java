@@ -41,20 +41,22 @@ public class Main {
         animals.add(c);
 
         WorldMap worldMap = new Globe(5,5, new FullPredestination());
-        worldMap.addAnimal(a);
-        worldMap.addAnimal(b);
-        worldMap.addAnimal(c);
+        //worldMap.addAnimal(a);
+        //worldMap.addAnimal(b);
+        //worldMap.addAnimal(c);
 
         Planter planter = new ForestedEquators(worldMap,20,11);
 
         planter.plant(9);
 
+        planter.plant(9);
+
         MapVisualizer visualizer = new MapVisualizer(worldMap);
 
-        for (int i = 0; i < 20; i++){
+        for (int i = 0; i < 1; i++){
             System.out.println(visualizer.draw(new Vector2d(0,0),new Vector2d(4,4)));
 
-            worldMap.moveAnimal(animals.get(i % 3));
+            //worldMap.moveAnimal(animals.get(i % 3));
         }
 
 
