@@ -51,10 +51,11 @@ public class Animal extends Organism{
 
     /**
      * The first part of animals movement.
-     * a) Activates the current gene changing the orientation.
-     * b) Changes the current gene to the next one according to the provided {@link GeneInterpreter}.
-     * c) Drains the specified amount of energy from the animal.
-     * d) Returns the current orientation as a vector on a 2D grid.
+     * a) Activates the current gene changing the orientation,
+     * b) Changes the current gene to the next one according to the provided {@link GeneInterpreter},
+     * c) Drains the specified amount of energy from the animal,
+     * d) Makes the animal older by 1,
+     * e) Returns the current orientation as a vector on a 2D grid,
      *
      * @param interpreter The interpreter used to set the next active gene.
      * @param energyRequired The energy this move drains from the animal.
@@ -63,6 +64,7 @@ public class Animal extends Organism{
     public Vector2d activateGene(GeneInterpreter interpreter, int energyRequired){
         orientation = orientation.rotate(genome[currentGene]);
         currentGene = interpreter.getNextGene(this);
+        age += 1;
         return orientation.toUnitVector();
     }
 
