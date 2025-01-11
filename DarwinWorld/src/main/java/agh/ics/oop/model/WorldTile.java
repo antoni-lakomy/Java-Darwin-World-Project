@@ -40,18 +40,15 @@ public class WorldTile {
      * If there are no animals returns the plant if present, otherwise null.
      *
      * @return The first {@link Organism} on this tile.
-     *
-     * @throws IllegalStateException if the tile is not sorted beforehand.
      */
     public Organism getOrganism() {
-        if (!sorted) throw new IllegalStateException("Trying to get an organism from an unsorted tile");
+        sortAnimals();
         if (animals.isEmpty()) return plant;
         return animals.getFirst();
     }
 
     /**
      * Adds an animal to the tile.
-     * Breaks sorting.
      *
      * @param animal {@link Animal} to be added to the map.
      */
@@ -101,7 +98,7 @@ public class WorldTile {
      * Sorts the animals on the tile using {@link AnimalComparator}.
      * That way animals are placed from the strongest to the weakest ones.
      * It is necessary to do this before initiating the consumption
-     * and multiplication faze of the simulation to preserve the
+     * and multiplication fazes of the simulation to preserve the
      * correct order.
      */
     private void sortAnimals(){
@@ -114,37 +111,35 @@ public class WorldTile {
      * If both animals and a plant are present on the tile, then
      * makes the strongest animal eat the plant, destroying it in the process.
      *
-     * @throws IllegalStateException if the tile is not sorted prior to the consumption.
+     * @return true - if the plant was successfully eaten, false otherwise.
      */
-    public void tryToConsumePlant(){
-        if (!sorted) throw new IllegalStateException("Trying to consume plants on an unsorted tile");
-        if (animals.isEmpty()) return;
+    public boolean tryToConsumePlant(){
+        sortAnimals();
+        if (animals.isEmpty()) return false;
         if (plant != null){
             animals.getFirst().addEnergy(plant.getEnergy());
             plant = null;
+            return true;
         }
+        return false;
     }
 
     /**
      * If there are two or more animals on the tile, and they are fed enough to multiply,
      * then uses the provided {@link AnimalBuilder} to make a new child and add it to the tile.
-     * Sorts the tile afterward to preserve the correct order.
      *
      * @param builder the builder used to create children.
      * @param fedThreshold the minimal energy animal has to have to be considered
      *                     fed and ready to reproduce.
-     *
-     * @throws IllegalStateException if the tile is not sorted beforehand.
      */
     public void tryToMultiply(AnimalBuilder builder, int fedThreshold){
-        if (!sorted) throw new IllegalStateException("Trying to multiply on an unsorted tile");
+        sortAnimals();
         for (int i = 1; i < animals.size(); i += 2){
 
             if (animals.get(i).getEnergy() < fedThreshold) break;
             sorted = false;
             animals.add(builder.buildFromParents(animals.get(i-1),animals.get(i)));
         }
-        sortAnimals();
     }
 
 

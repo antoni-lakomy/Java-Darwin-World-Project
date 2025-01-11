@@ -47,7 +47,7 @@ public class Main {
 
         Planter planter = new ForestedEquators(worldMap,20,11);
 
-        planter.plant(20);
+        planter.plant(9);
 
         MapVisualizer visualizer = new MapVisualizer(worldMap);
 
