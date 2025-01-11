@@ -119,6 +119,19 @@ public class Globe implements WorldMap {
         return newAnimals;
     }
 
+    @Override
+    public List<Animal> removeDead() {
+        List<Animal> deadAnimals = new LinkedList<>();
+
+        for (int y = 0; y < height; y++){
+            for (int x = 0; x < width; x++){
+                deadAnimals.addAll(map[x][y].removeDeadAnimals());
+            }
+        }
+
+        return deadAnimals;
+    }
+
 
 
 

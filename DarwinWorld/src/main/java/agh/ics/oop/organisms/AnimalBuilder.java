@@ -26,6 +26,7 @@ public class AnimalBuilder {
 
     private final int minMutation;
 
+    //TODO albo i nie - uwzględnienie różnych wersji systemu mutacji
     public AnimalBuilder(SimParams params){
         this.rng = new Random(params.seed());
         this.genomeLength = params.animalGenomeLength();
