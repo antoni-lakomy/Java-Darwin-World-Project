@@ -7,6 +7,7 @@ import agh.ics.oop.organisms.Organism;
 import agh.ics.oop.organisms.Plant;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -127,19 +128,26 @@ public class WorldTile {
     /**
      * If there are two or more animals on the tile, and they are fed enough to multiply,
      * then uses the provided {@link AnimalBuilder} to make a new child and add it to the tile.
+     * Returns the newly created children.
      *
      * @param builder the builder used to create children.
      * @param fedThreshold the minimal energy animal has to have to be considered
      *                     fed and ready to reproduce.
+     *
+     * @return A list of new animals created on this tile.
      */
-    public void tryToMultiply(AnimalBuilder builder, int fedThreshold){
+    public List<Animal> tryToMultiply(AnimalBuilder builder, int fedThreshold){
         sortAnimals();
+        List<Animal> newAnimals = new LinkedList<>();
         for (int i = 1; i < animals.size(); i += 2){
 
             if (animals.get(i).getEnergy() < fedThreshold) break;
             sorted = false;
-            animals.add(builder.buildFromParents(animals.get(i-1),animals.get(i)));
+            Animal newAnimal = builder.buildFromParents(animals.get(i-1),animals.get(i));
+            animals.add(newAnimal);
+            newAnimals.addFirst(newAnimal);
         }
+        return newAnimals;
     }
 
 

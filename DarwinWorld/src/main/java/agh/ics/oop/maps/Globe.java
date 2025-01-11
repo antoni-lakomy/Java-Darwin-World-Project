@@ -4,6 +4,7 @@ import agh.ics.oop.model.FullPredestination;
 import agh.ics.oop.model.GeneInterpreter;
 import agh.ics.oop.model.WorldTile;
 import agh.ics.oop.organisms.Animal;
+import agh.ics.oop.organisms.AnimalBuilder;
 import agh.ics.oop.organisms.Organism;
 import agh.ics.oop.organisms.Plant;
 import agh.ics.oop.records.Vector2d;
@@ -104,5 +105,24 @@ public class Globe implements WorldMap {
 
         return positions;
     }
+
+    @Override
+    public List<Animal> reproduceAnimals(AnimalBuilder animalBuilder, int animalFedThreshold) {
+        List<Animal> newAnimals = new LinkedList<>();
+
+        for (int y = 0; y < height; y++){
+            for (int x = 0; x < width; x++){
+                newAnimals.addAll(map[x][y].tryToMultiply(animalBuilder,animalFedThreshold));
+            }
+        }
+
+        return newAnimals;
+    }
+
+
+
+
+
+
 }
 
