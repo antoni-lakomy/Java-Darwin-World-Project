@@ -64,6 +64,7 @@ public class Animal extends Organism{
     public Vector2d activateGene(GeneInterpreter interpreter, int energyRequired){
         orientation = orientation.rotate(genome[currentGene]);
         currentGene = interpreter.getNextGene(this);
+        energy -= energyRequired;
         age += 1;
         return orientation.toUnitVector();
     }

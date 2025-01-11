@@ -12,5 +12,10 @@ public interface Planter {
      */
     void plant(int numberToPlant);
 
+
+    /**
+     * Start the consumption faze of the simulation on this planters {@link WorldMap}
+     *
+     */
     void consume();
 }

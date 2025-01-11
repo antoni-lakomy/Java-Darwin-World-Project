@@ -109,6 +109,24 @@ public class WorldTile {
     }
 
     /**
+     * Removes the dead animals from this tile.
+     *
+     * @return A list of the remove animals.
+     */
+    public List<Animal> removeDeadAnimals(){
+        sortAnimals();
+        List<Animal> deadAnimals = new ArrayList<>();
+        for (int i = animals.size()-1; i >= 0; i--){
+            if (animals.get(i).getEnergy() > 0) break;
+            deadAnimals.add(animals.get(i));
+            animals.remove(i);
+        }
+        return deadAnimals;
+    }
+
+
+
+    /**
      * If both animals and a plant are present on the tile, then
      * makes the strongest animal eat the plant, destroying it in the process.
      *
