@@ -1,9 +1,8 @@
 package agh.ics.oop;
 
 
+import agh.ics.oop.maps.Globe;
 import agh.ics.oop.maps.WorldMap;
-import agh.ics.oop.maps.WorldMapInterface;
-import agh.ics.oop.model.AnimalComparator;
 import agh.ics.oop.organisms.Animal;
 import agh.ics.oop.organisms.AnimalBuilder;
 import agh.ics.oop.records.SimParams;
@@ -11,7 +10,6 @@ import agh.ics.oop.records.Vector2d;
 import agh.ics.oop.util.MapVisualizer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -39,7 +37,7 @@ public class Main {
         animals.add(b);
         animals.add(c);
 
-        WorldMap worldMap = new WorldMap(5,5);
+        WorldMap worldMap = new Globe(5,5);
         worldMap.addAnimal(a);
         worldMap.addAnimal(b);
         worldMap.addAnimal(c);
