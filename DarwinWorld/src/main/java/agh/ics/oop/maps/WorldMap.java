@@ -1,68 +1,88 @@
 package agh.ics.oop.maps;
 
+import agh.ics.oop.organisms.Animal;
 import agh.ics.oop.organisms.Organism;
+import agh.ics.oop.organisms.Plant;
 import agh.ics.oop.records.Vector2d;
 
-import java.util.*;
+import java.util.List;
 
-public class WorldMap implements WorldMapInterface {
-    private final int width;
-    private final int height;
-    private final Map<Vector2d, List<Organism>> map;
+public interface WorldMap {
 
-    public WorldMap(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.map = new HashMap<>();
-        initializeMap();
-    }
+    int getWidth();
 
-    // Assigns empty list for each field on the map. Each list will then contain organisms standing on that field.
-    // Doing so, we do not need to check each time if we got particular key in the map HashMap, we can just simply
-    // refer to it when we want to get information about organisms occupying that field or when we want to take any action with organism (e.g. add or remove)
-    private void initializeMap() {
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                map.put(new Vector2d(x, y), new ArrayList<>());
-            }
-        }
-    }
+    int getHeight();
 
-    @Override
-    public boolean isFieldEmpty(Vector2d position) {
-        return map.get(position).isEmpty();
-    }
+    /**
+     * Checks if the tile on the given position is empty.
+     *
+     * @param position The position to check.
+     * @return true if the tile is empty, false otherwise.
+     */
+    boolean isFieldEmpty(Vector2d position);
 
-    @Override
-    public List<Organism> getOrganismsAt(Vector2d position) {
-        return map.get(position);
-    }
+    /**
+     * Gets the organism from the tile at a given position.
+     * Will throw an exception if the tile is not sorted beforehand;
+     *
+     * @param position The position to check.
+     * @return The organism at the given position>
+     *
+     * @throws IllegalStateException if the tile is not sorted beforehand.
+     */
+    Organism getOrganismAt(Vector2d position);
 
-    @Override
-    public void addOrganism(Organism organism) {
-        map.get(organism.getPosition()).add(organism);
-    }
+    /**
+     * Adds an animal to the map.
+     * @param animal {@link Animal} to be added.
+     */
+    void addAnimal(Animal animal);
 
-    @Override
-    public void removeOrganism(Organism organism) {
-        map.get(organism.getPosition()).remove(organism);
-    }
+    /**
+     * Removes an animal from the map.
+     * @param animal {@link Animal} to be removed.
+     */
+    void removeAnimal(Animal animal);
 
-    public int getWidth() {
-        return width;
-    }
+    /**
+     * Adds a plant to the map.
+     * Throws an exception if there already is a plant on this spot on the map.
+     *
+     * @param plant {@link Plant} to be added.
+     *
+     * @throws IllegalStateException if there already is a plant
+     *                               on the same position on the map.
+     */
+    void addPlant(Plant plant);
 
-    public int getHeight() {
-        return height;
-    }
+    /**
+     * Binds the provided position to the map borders including
+     * special map features.
+     *
+     * @param position The position to bind.
+     * @return A {@link Vector2d} containing the bound position.
+     */
+    Vector2d boundPosition(Vector2d position);
 
-    public void moveOrganism(Organism organism, Vector2d newPosition) {
-        List<Organism> currentField = map.get(organism.getPosition());
-        List<Organism> newField = map.get(newPosition);
 
-        currentField.remove(organism);
-        organism.setPosition(newPosition);
-        newField.add(organism);
-    }
+    /**
+     * Moves an animal on the map according to its genome
+     * and this maps specifications.
+     *
+     * @param animal {@link Animal} to move.
+     *
+     * @throws NullPointerException if the animal was not present on the map.
+     */
+    void moveAnimal(Animal animal);
+
+
+    /**
+     * Initiates the consumption faze of the simulation.
+     * Tries to consume plants on every tile of the map.
+     * The spots where the plant was successfully consumed
+     * are returned as a list of positions.
+     *
+     * @return A list of positions on the map where a plant was successfully consumed.
+     */
+    List<Vector2d> consumePlants();
 }
-
