@@ -8,6 +8,10 @@ import agh.ics.oop.organisms.Organism;
 import agh.ics.oop.organisms.Plant;
 import agh.ics.oop.records.Vector2d;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Globe implements WorldMap {
     private final int width;
     private final int height;
@@ -83,6 +87,22 @@ public class Globe implements WorldMap {
 
         map[newPosition.x()][newPosition.y()].addAnimal(animal);
         animal.setPosition(newPosition);
+    }
+
+    @Override
+    public List<Vector2d> consumePlants() {
+        List<Vector2d> positions = new LinkedList<>();
+
+        for (int y = 0; y < height; y++){
+            for (int x = 0; x < width; x++){
+
+                if (map[x][y].tryToConsumePlant())
+                    positions.addFirst(new Vector2d(x,y));
+
+            }
+        }
+
+        return positions;
     }
 }
 

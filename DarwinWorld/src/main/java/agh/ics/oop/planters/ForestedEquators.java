@@ -80,4 +80,17 @@ public class ForestedEquators implements Planter{
 
         normalTiles = new ArrayList<>(plantFromList(normal,normalTiles));
     }
+
+    @Override
+    public void consume() {
+        List<Vector2d> positionsFreed = map.consumePlants();
+
+        for (Vector2d position : positionsFreed){
+            if (minEquator <= position.y() && position.y() < maxEquator){
+                preferredTiles.addLast(position);
+            } else {
+                normalTiles.addLast(position);
+            }
+        }
+    }
 }
