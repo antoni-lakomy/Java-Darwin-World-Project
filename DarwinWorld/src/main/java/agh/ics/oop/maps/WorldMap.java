@@ -98,4 +98,12 @@ public interface WorldMap {
      * @return A list of children created in this faze.
      */
     List<Animal> reproduceAnimals(AnimalBuilder animalBuilder,int animalFedThreshold);
+
+    /**
+     * Removes the dead animals from the map.
+     * An animal is considered dead if its energy has dropped to zero.
+     *
+     * @return A list of the removed animals
+     */
+    List<Animal> removeDead();
 }
