@@ -118,9 +118,7 @@ public class AnimalBuilder {
         Byte[] sGenome = parentStrong.getGenome();
         Byte[] wGenome = parentWeak.getGenome();
 
-        if (splitPointLeft >= genomeLength || splitPointLeft <= 0) {
-            System.arraycopy(sGenome, 0, newGenome, 0, genomeLength);
-        } else if (strongLeft){
+        if (strongLeft){
             System.arraycopy(sGenome, 0, newGenome, 0, splitPointLeft);
             System.arraycopy(wGenome, splitPointLeft, newGenome, splitPointLeft,splitPointRight);
         } else{
