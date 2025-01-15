@@ -1,26 +1,21 @@
 package agh.ics.oop.maps;
 
-import agh.ics.oop.model.FullPredestination;
 import agh.ics.oop.model.GeneInterpreter;
-import agh.ics.oop.model.WorldTile;
 import agh.ics.oop.organisms.Animal;
-import agh.ics.oop.organisms.AnimalBuilder;
-import agh.ics.oop.organisms.Organism;
-import agh.ics.oop.organisms.Plant;
 import agh.ics.oop.records.Vector2d;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
-public class Globe extends AbstractWorldMap {
+public class Poles extends AbstractWorldMap {
 
-    public Globe(int width, int height, GeneInterpreter geneInterpreter) {
+    public Poles(int width, int height, GeneInterpreter geneInterpreter) {
         super(width, height, geneInterpreter);
     }
 
     public void moveAnimal(Animal animal) {
-        Vector2d moveVector = animal.activateGene(geneInterpreter,1);
+        int energyRequired = calculateEnergy(animal.getPosition().y());
+        Vector2d moveVector = animal.activateGene(geneInterpreter, energyRequired);
         Vector2d oldPosition = animal.getPosition();
         Vector2d newPosition = animal.getPosition().add(moveVector);
         newPosition = boundPosition(oldPosition, newPosition, animal);
@@ -32,5 +27,11 @@ public class Globe extends AbstractWorldMap {
         animal.setPosition(newPosition);
     }
 
-}
+    public int calculateEnergy(int positionY) {
+        int mapHeight = getHeight();
+        int distance = min(positionY, mapHeight - positionY);
+        int demandedEnergy = max(1, 10 - ((distance * 2 / mapHeight) * 10)); // closer it gets to Pole, higher cost gets. Energy rises gradually starting at 1, up to 10.
+        return demandedEnergy;
+    }
 
+}

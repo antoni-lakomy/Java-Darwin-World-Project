@@ -1,0 +1,137 @@
+package agh.ics.oop.maps;
+
+import agh.ics.oop.model.FullPredestination;
+import agh.ics.oop.model.GeneInterpreter;
+import agh.ics.oop.model.WorldTile;
+import agh.ics.oop.organisms.Animal;
+import agh.ics.oop.organisms.AnimalBuilder;
+import agh.ics.oop.organisms.Organism;
+import agh.ics.oop.organisms.Plant;
+import agh.ics.oop.records.Vector2d;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+public abstract class AbstractWorldMap implements WorldMap {
+    protected final int width;
+    protected final int height;
+    protected final WorldTile[][] map;
+    protected final GeneInterpreter geneInterpreter;
+
+    public AbstractWorldMap(int width, int height,GeneInterpreter geneInterpreter) {
+        this.width = width;
+        this.height = height;
+        this.geneInterpreter = geneInterpreter;
+        this.map = new WorldTile[width][height];
+        for (int x = 0; x < width; x++){
+            for (int y = 0; y < height; y++){
+                map[x][y] = new WorldTile();
+            }
+        }
+    }
+
+    @Override
+    public boolean isFieldEmpty(Vector2d position) {
+        return map[position.x()][position.y()].isEmpty();
+    }
+
+    @Override
+    public Organism getOrganismAt(Vector2d position) {
+        return map[position.x()][position.y()].getOrganism();
+    }
+
+    //TODO - może obsługa postawienia tego samego zwierzaka wiele razy
+    @Override
+    public void addAnimal(Animal animal) {
+        Vector2d poz = animal.getPosition();
+        map[poz.x()][poz.y()].addAnimal(animal);
+    }
+
+    @Override
+    public void removeAnimal(Animal animal) {
+        Vector2d poz = animal.getPosition();
+        map[poz.x()][poz.y()].removeAnimal(animal);
+    }
+
+    @Override
+    public void addPlant(Plant plant) {
+        Vector2d poz = plant.getPosition();
+        map[poz.x()][poz.y()].addPlant(plant);
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    @Override
+    public Vector2d boundPosition(Vector2d oldPosition, Vector2d newPosition, Animal animal) {
+        if (newPosition.y() >= height) {
+            newPosition = oldPosition;
+            animal.rotate(4);
+        }
+        if (newPosition.y() < 0) {
+            newPosition = oldPosition;
+            animal.rotate(4);
+        }
+        if (newPosition.x() >= width) newPosition = new Vector2d(0,newPosition.y());
+        if (newPosition.x() < 0) newPosition = new Vector2d(width-1, newPosition.y());
+        return newPosition;
+    }
+
+
+
+    @Override
+    public List<Vector2d> consumePlants() {
+        List<Vector2d> positions = new LinkedList<>();
+
+        for (int y = 0; y < height; y++){
+            for (int x = 0; x < width; x++){
+
+                if (map[x][y].tryToConsumePlant())
+                    positions.addFirst(new Vector2d(x,y));
+
+            }
+        }
+
+        return positions;
+    }
+
+    @Override
+    public List<Animal> reproduceAnimals(AnimalBuilder animalBuilder, int animalFedThreshold) {
+        List<Animal> newAnimals = new LinkedList<>();
+
+        for (int y = 0; y < height; y++){
+            for (int x = 0; x < width; x++){
+                newAnimals.addAll(map[x][y].tryToMultiply(animalBuilder,animalFedThreshold));
+            }
+        }
+
+        return newAnimals;
+    }
+
+    @Override
+    public List<Animal> removeDead() {
+        List<Animal> deadAnimals = new LinkedList<>();
+
+        for (int y = 0; y < height; y++){
+            for (int x = 0; x < width; x++){
+                deadAnimals.addAll(map[x][y].removeDeadAnimals());
+            }
+        }
+
+        return deadAnimals;
+    }
+
+//    Divides between children classes as basic map (Globe - kula ziemska) and Poles modifier (Bieguny)
+    public abstract void moveAnimal(Animal animal);
+
+
+
+
+}
+
