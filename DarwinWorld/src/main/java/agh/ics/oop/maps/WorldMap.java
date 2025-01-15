@@ -60,10 +60,11 @@ public interface WorldMap {
      * Binds the provided position to the map borders including
      * special map features.
      *
-     * @param position The position to bind.
+     * @param oldPosition The old position of animal, to make it easier to restore its precious value if needed
+     * @param newPosition The position to bind.
      * @return A {@link Vector2d} containing the bound position.
      */
-    Vector2d boundPosition(Vector2d position);
+    Vector2d boundPosition(Vector2d oldPosition, Vector2d newPosition, Animal animal);
 
 
     /**

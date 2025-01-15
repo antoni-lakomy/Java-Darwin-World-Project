@@ -26,7 +26,6 @@ public class AnimalBuilder {
 
     private final int minMutation;
 
-    //TODO albo i nie - uwzględnienie różnych wersji systemu mutacji
     public AnimalBuilder(SimParams params){
         this.rng = new Random(params.seed());
         this.genomeLength = params.animalGenomeLength();
@@ -119,7 +118,9 @@ public class AnimalBuilder {
         Byte[] sGenome = parentStrong.getGenome();
         Byte[] wGenome = parentWeak.getGenome();
 
-        if (strongLeft){
+        if (splitPointLeft >= genomeLength || splitPointLeft <= 0) {
+            System.arraycopy(sGenome, 0, newGenome, 0, genomeLength);
+        } else if (strongLeft){
             System.arraycopy(sGenome, 0, newGenome, 0, splitPointLeft);
             System.arraycopy(wGenome, splitPointLeft, newGenome, splitPointLeft,splitPointRight);
         } else{
@@ -136,7 +137,6 @@ public class AnimalBuilder {
 
         Animal animal = buildBase(parentStrong.getPosition(),reproductionCost*2,newGenome);
 
-        //still not sure if it should be here
         parentStrong.energy -= reproductionCost;
         parentWeak.energy -= reproductionCost;
         parentStrong.children.add(animal);

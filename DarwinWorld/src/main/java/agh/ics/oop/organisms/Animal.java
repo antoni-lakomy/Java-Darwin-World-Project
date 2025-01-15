@@ -49,6 +49,8 @@ public class Animal extends Organism{
         return orientation.toString();
     }
 
+    public void rotate(int rotation){ this.orientation.rotate(rotation); }
+
     /**
      * The first part of animals movement.
      * a) Activates the current gene changing the orientation,

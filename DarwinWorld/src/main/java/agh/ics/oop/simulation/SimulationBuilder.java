@@ -1,6 +1,7 @@
 package agh.ics.oop.simulation;
 
 import agh.ics.oop.maps.Globe;
+import agh.ics.oop.maps.Poles;
 import agh.ics.oop.maps.WorldMap;
 import agh.ics.oop.model.FullPredestination;
 import agh.ics.oop.model.GeneInterpreter;
@@ -49,7 +50,7 @@ public final class SimulationBuilder {
     private static WorldMap createMap(SimParams params, GeneInterpreter interpreter){
         WorldMap map;
         if (params.mapType() == 0) return new Globe(params.mapWidth(),params.mapHeight(),interpreter);
-        //TODO - bieguny
+        if (params.mapType() == 1) return new Poles(params.mapWidth(),params.mapHeight(),interpreter);
         throw new IllegalArgumentException("The specified map type is incorrect");
     }
 
