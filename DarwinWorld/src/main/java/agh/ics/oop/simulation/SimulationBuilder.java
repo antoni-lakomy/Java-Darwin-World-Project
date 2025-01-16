@@ -5,6 +5,7 @@ import agh.ics.oop.maps.Poles;
 import agh.ics.oop.maps.WorldMap;
 import agh.ics.oop.model.FullPredestination;
 import agh.ics.oop.model.GeneInterpreter;
+import agh.ics.oop.model.OldnessSadness;
 import agh.ics.oop.organisms.Animal;
 import agh.ics.oop.organisms.AnimalBuilder;
 import agh.ics.oop.planters.ForestedEquators;
@@ -43,6 +44,7 @@ public final class SimulationBuilder {
 
     private static GeneInterpreter createGeneInterpreter(SimParams params){
         if (params.animalBehaviourType() == 0) return new FullPredestination();
+        if (params.animalBehaviourType() == 1) return new OldnessSadness();
         //TODO - starość nie radość
         throw new IllegalArgumentException("The specified animal behaviour type is incorrect");
     }

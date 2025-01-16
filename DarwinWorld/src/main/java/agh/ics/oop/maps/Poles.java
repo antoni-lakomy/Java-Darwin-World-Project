@@ -18,8 +18,15 @@ public class Poles extends AbstractWorldMap {
         int energyRequired = calculateEnergy(animal.getPosition().y());
         Vector2d moveVector = animal.activateGene(geneInterpreter, energyRequired);
         Vector2d oldPosition = animal.getPosition();
-        Vector2d newPosition = animal.getPosition().add(moveVector);
-        newPosition = boundPosition(newPosition, animal);
+        Vector2d newPosition;
+        if (!animal.isSkippingMove()) {
+            newPosition = animal.getPosition().add(moveVector);
+            newPosition = boundPosition(newPosition, animal);
+        } else {
+            newPosition = oldPosition;
+            animal.setSkippingMove(false);
+        }
+
 
         if (!map[oldPosition.x()][oldPosition.y()].removeAnimal(animal))
             throw new NullPointerException("Animal was not present on the map");
