@@ -23,7 +23,7 @@ public class Globe extends AbstractWorldMap {
         Vector2d moveVector = animal.activateGene(geneInterpreter,1);
         Vector2d oldPosition = animal.getPosition();
         Vector2d newPosition = animal.getPosition().add(moveVector);
-        newPosition = boundPosition(oldPosition, newPosition, animal);
+        newPosition = boundPosition(newPosition, animal);
 
         if (!map[oldPosition.x()][oldPosition.y()].removeAnimal(animal))
             throw new NullPointerException("Animal was not present on the map");
