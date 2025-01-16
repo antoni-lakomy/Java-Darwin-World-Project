@@ -15,14 +15,14 @@ public enum MapDirection {
     @Override
     public String toString(){
         return switch (this){
-            case NORTH -> "🢁";
-            case NORTH_EAST -> "🢅";
-            case EAST -> "🢂";
-            case SOUTH_EAST -> "🢆";
-            case SOUTH -> "🢃";
-            case SOUTH_WEST -> "🢇";
-            case WEST -> "🢀";
-            case NORTH_WEST -> "🢄";
+            case NORTH -> "^";
+            case NORTH_EAST -> "1";
+            case EAST -> ">";
+            case SOUTH_EAST -> "2";
+            case SOUTH -> "v";
+            case SOUTH_WEST -> "3";
+            case WEST -> "<";
+            case NORTH_WEST -> "4";
         };
     }
 

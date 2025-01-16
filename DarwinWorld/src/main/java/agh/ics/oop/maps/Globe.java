@@ -13,75 +13,17 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Globe implements WorldMap {
-    private final int width;
-    private final int height;
-    private final WorldTile[][] map;
-    private final GeneInterpreter geneInterpreter;
+public class Globe extends AbstractWorldMap {
 
-    public Globe(int width, int height,GeneInterpreter geneInterpreter) {
-        this.width = width;
-        this.height = height;
-        this.geneInterpreter = geneInterpreter;
-        this.map = new WorldTile[width][height];
-        for (int x = 0; x < width; x++){
-            for (int y = 0; y < height; y++){
-                map[x][y] = new WorldTile();
-            }
-        }
+    public Globe(int width, int height, GeneInterpreter geneInterpreter) {
+        super(width, height, geneInterpreter);
     }
-
-    @Override
-    public boolean isFieldEmpty(Vector2d position) {
-        return map[position.x()][position.y()].isEmpty();
-    }
-
-    @Override
-    public Organism getOrganismAt(Vector2d position) {
-        return map[position.x()][position.y()].getOrganism();
-    }
-
-    //TODO - może obsługa postawienia tego samego zwierzaka wiele razy
-    @Override
-    public void addAnimal(Animal animal) {
-        Vector2d poz = animal.getPosition();
-        map[poz.x()][poz.y()].addAnimal(animal);
-    }
-
-    @Override
-    public void removeAnimal(Animal animal) {
-        Vector2d poz = animal.getPosition();
-        map[poz.x()][poz.y()].removeAnimal(animal);
-    }
-
-    @Override
-    public void addPlant(Plant plant) {
-        Vector2d poz = plant.getPosition();
-        map[poz.x()][poz.y()].addPlant(plant);
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public Vector2d boundPosition(Vector2d position){
-        if (position.x() >= width) position = new Vector2d(0,position.y());
-        if (position.x() < 0) position = new Vector2d(width-1, position.y());
-        if (position.y() >= width) position = new Vector2d(position.x(),height-1);
-        if (position.y() < 0) position = new Vector2d(position.x(),0);
-        return position;
-    }
-
 
     public void moveAnimal(Animal animal) {
         Vector2d moveVector = animal.activateGene(geneInterpreter,1);
         Vector2d oldPosition = animal.getPosition();
         Vector2d newPosition = animal.getPosition().add(moveVector);
-        newPosition = boundPosition(newPosition);
+        newPosition = boundPosition(newPosition, animal);
 
         if (!map[oldPosition.x()][oldPosition.y()].removeAnimal(animal))
             throw new NullPointerException("Animal was not present on the map");
@@ -89,53 +31,6 @@ public class Globe implements WorldMap {
         map[newPosition.x()][newPosition.y()].addAnimal(animal);
         animal.setPosition(newPosition);
     }
-
-    @Override
-    public List<Vector2d> consumePlants() {
-        List<Vector2d> positions = new LinkedList<>();
-
-        for (int y = 0; y < height; y++){
-            for (int x = 0; x < width; x++){
-
-                if (map[x][y].tryToConsumePlant())
-                    positions.addFirst(new Vector2d(x,y));
-
-            }
-        }
-
-        return positions;
-    }
-
-    @Override
-    public List<Animal> reproduceAnimals(AnimalBuilder animalBuilder, int animalFedThreshold) {
-        List<Animal> newAnimals = new LinkedList<>();
-
-        for (int y = 0; y < height; y++){
-            for (int x = 0; x < width; x++){
-                newAnimals.addAll(map[x][y].tryToMultiply(animalBuilder,animalFedThreshold));
-            }
-        }
-
-        return newAnimals;
-    }
-
-    @Override
-    public List<Animal> removeDead() {
-        List<Animal> deadAnimals = new LinkedList<>();
-
-        for (int y = 0; y < height; y++){
-            for (int x = 0; x < width; x++){
-                deadAnimals.addAll(map[x][y].removeDeadAnimals());
-            }
-        }
-
-        return deadAnimals;
-    }
-
-
-
-
-
 
 }
 

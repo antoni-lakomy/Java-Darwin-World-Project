@@ -26,7 +26,6 @@ public class AnimalBuilder {
 
     private final int minMutation;
 
-    //TODO albo i nie - uwzględnienie różnych wersji systemu mutacji
     public AnimalBuilder(SimParams params){
         this.rng = new Random(params.seed());
         this.genomeLength = params.animalGenomeLength();
@@ -136,7 +135,6 @@ public class AnimalBuilder {
 
         Animal animal = buildBase(parentStrong.getPosition(),reproductionCost*2,newGenome);
 
-        //still not sure if it should be here
         parentStrong.energy -= reproductionCost;
         parentWeak.energy -= reproductionCost;
         parentStrong.children.add(animal);

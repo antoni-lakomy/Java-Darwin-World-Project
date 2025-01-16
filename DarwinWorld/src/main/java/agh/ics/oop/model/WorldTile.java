@@ -157,12 +157,14 @@ public class WorldTile {
     public List<Animal> tryToMultiply(AnimalBuilder builder, int fedThreshold){
         sortAnimals();
         List<Animal> newAnimals = new LinkedList<>();
-        for (int i = 1; i < animals.size(); i += 2){
+        int currentAnimalSize = animals.size(); //So that newborns can't reproduce
+        for (int i = 1; i < currentAnimalSize; i += 2){
 
             if (animals.get(i).getEnergy() < fedThreshold) break;
             sorted = false;
+
             Animal newAnimal = builder.buildFromParents(animals.get(i-1),animals.get(i));
-            animals.add(newAnimal);
+            animals.addLast(newAnimal);
             newAnimals.addFirst(newAnimal);
         }
         return newAnimals;
