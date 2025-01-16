@@ -69,13 +69,13 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     @Override
-    public Vector2d boundPosition(Vector2d oldPosition, Vector2d newPosition, Animal animal) {
+    public Vector2d boundPosition(Vector2d newPosition, Animal animal) {
         if (newPosition.y() >= height) {
-            newPosition = oldPosition;
+            newPosition = animal.getPosition();
             animal.rotate(4);
         }
         if (newPosition.y() < 0) {
-            newPosition = oldPosition;
+            newPosition = animal.getPosition();
             animal.rotate(4);
         }
         if (newPosition.x() >= width) newPosition = new Vector2d(0,newPosition.y());
