@@ -24,9 +24,9 @@ public class Main {
         System.out.println("Hello world");
 
         SimParams params = new SimParams(11,10,10,
-                                0,10,3,
+                                1,10,30,
                             3,0,5,
-                        30,20,10,
+                        100,20,10,
                     10, 0,0,4,0);
 
 

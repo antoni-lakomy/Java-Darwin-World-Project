@@ -59,11 +59,13 @@ public interface WorldMap {
     /**
      * Binds the provided position to the map borders including
      * special map features.
+     * If animal tries to cross the Pole, it stays on current field and rotates 180 deg.
+     * If it passes side boundaries it appears on the other side.
      *
-     * @param position The position to bind.
+     * @param newPosition The position to bind.
      * @return A {@link Vector2d} containing the bound position.
      */
-    Vector2d boundPosition(Vector2d position);
+    Vector2d boundPosition(Vector2d newPosition, Animal animal);
 
 
     /**
