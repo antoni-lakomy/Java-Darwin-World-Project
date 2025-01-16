@@ -18,6 +18,8 @@ public class Animal extends Organism{
 
     protected int age;
 
+    protected boolean skippingMove;
+
     protected List<Animal> parents;
 
     protected List<Animal> children;
@@ -36,8 +38,13 @@ public class Animal extends Organism{
 
     public List<Animal> getChildren() { return children;}
 
+    public void setSkippingMove(boolean isSkippingMove) { this.skippingMove = isSkippingMove; }
+
+    public boolean isSkippingMove() { return this.skippingMove; }
+
     public Animal(Vector2d position){
         super(position);
+        skippingMove = false;
     }
 
     public void addEnergy(int energy){

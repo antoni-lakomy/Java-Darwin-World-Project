@@ -27,7 +27,7 @@ public class Main {
                                 1,10,30,
                             3,0,5,
                         100,20,10,
-                    10, 0,0,4,0);
+                    10, 1,0,4,0);
 
 
         Simulation simulation = SimulationBuilder.build(params);
