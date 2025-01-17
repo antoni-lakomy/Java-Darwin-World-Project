@@ -30,7 +30,11 @@ public class Animal extends Organism{
 
     public MapDirection getOrientation() { return  orientation; }
 
+    public void setOrientation(MapDirection orientation) { this.orientation = orientation; } //for testing purpose
+
     public int getCurrentGene() { return  currentGene; }
+
+    public void setCurrentGene(int currentGene) { this.currentGene = currentGene; } //for testing purpose
 
     public int getEnergy() { return energy; }
 
@@ -103,7 +107,7 @@ public class Animal extends Organism{
         return orientation.toString();
     }
 
-    public void rotate(int rotation){ this.orientation.rotate(rotation); }
+    public void rotate(int rotation){ this.orientation = this.orientation.rotate(rotation); }
 
     /**
      * The first part of animals movement.

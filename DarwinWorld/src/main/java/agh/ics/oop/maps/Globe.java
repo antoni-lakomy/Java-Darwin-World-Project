@@ -1,17 +1,8 @@
 package agh.ics.oop.maps;
 
-import agh.ics.oop.model.FullPredestination;
 import agh.ics.oop.model.GeneInterpreter;
-import agh.ics.oop.model.WorldTile;
 import agh.ics.oop.organisms.Animal;
-import agh.ics.oop.organisms.AnimalBuilder;
-import agh.ics.oop.organisms.Organism;
-import agh.ics.oop.organisms.Plant;
 import agh.ics.oop.records.Vector2d;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Globe extends AbstractWorldMap {
 

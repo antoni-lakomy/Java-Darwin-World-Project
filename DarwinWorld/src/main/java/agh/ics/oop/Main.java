@@ -1,25 +1,11 @@
 package agh.ics.oop;
 
 
-import agh.ics.oop.enums.MapDirection;
-import agh.ics.oop.maps.Globe;
-import agh.ics.oop.maps.WorldMap;
-import agh.ics.oop.model.FullPredestination;
 import agh.ics.oop.observers.ConsoleDisplay;
 import agh.ics.oop.observers.SimObserver;
-import agh.ics.oop.organisms.Animal;
-import agh.ics.oop.organisms.AnimalBuilder;
-import agh.ics.oop.planters.ForestedEquators;
-import agh.ics.oop.planters.Planter;
 import agh.ics.oop.records.SimParams;
-import agh.ics.oop.records.Vector2d;
 import agh.ics.oop.simulation.Simulation;
 import agh.ics.oop.simulation.SimulationBuilder;
-import agh.ics.oop.util.MapVisualizer;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
