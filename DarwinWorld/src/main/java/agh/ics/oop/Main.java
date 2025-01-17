@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 
+import agh.ics.oop.enums.MapDirection;
 import agh.ics.oop.maps.Globe;
 import agh.ics.oop.maps.WorldMap;
 import agh.ics.oop.model.FullPredestination;
@@ -17,6 +18,7 @@ import agh.ics.oop.simulation.SimulationBuilder;
 import agh.ics.oop.util.MapVisualizer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {

@@ -4,7 +4,7 @@ import agh.ics.oop.enums.MapDirection;
 import agh.ics.oop.model.GeneInterpreter;
 import agh.ics.oop.records.Vector2d;
 
-import java.util.List;
+import java.util.*;
 
 public class Animal extends Organism{
 
@@ -17,6 +17,8 @@ public class Animal extends Organism{
     protected int energy;
 
     protected int age;
+
+    protected int plantsEaten;
 
     protected boolean skippingMove;
 
@@ -38,6 +40,10 @@ public class Animal extends Organism{
 
     public List<Animal> getChildren() { return children;}
 
+    public int getPlantsEaten() {return plantsEaten;}
+
+    public void addPlantsEaten() {plantsEaten++;}
+
     public void setSkippingMove(boolean isSkippingMove) { this.skippingMove = isSkippingMove; }
 
     public boolean isSkippingMove() { return this.skippingMove; }
@@ -45,8 +51,49 @@ public class Animal extends Organism{
     public Animal(Vector2d position){
         super(position);
         skippingMove = false;
+        plantsEaten = 0;
     }
 
+    /**
+     * Counts the total number of descendants of this animal.
+     * Descendants include all children, grandchildren, etc., but avoids double-counting.
+     * Classic BFS algorithm.
+     * @return Total number of unique descendants.
+     */
+    public int countDescendants() {
+        Set<Animal> visited = new HashSet<>();
+        Queue<Animal> queue = new LinkedList<>();
+
+        // Add direct children to the queue
+        queue.addAll(this.children);
+        visited.addAll(this.children);
+
+        while (!queue.isEmpty()) {
+            Animal current = queue.poll();
+
+            // Checks children of the current animal
+            for (Animal child : current.children) {
+                if (!visited.contains(child)) {
+                    visited.add(child);
+                    queue.add(child);
+                }
+            }
+        }
+
+        return visited.size(); // Total unique descendants
+    }
+
+
+    public void animalStats() {
+        this.getGenome();
+        this.getCurrentGene();
+        this.getEnergy();
+        this.getPlantsEaten();
+        this.getChildren().size();
+        this.countDescendants();
+        this.getAge(); //którego dnia zmarło rozumiem jako - ile miało dni jak zmarło
+
+    }
     public void addEnergy(int energy){
         this.energy += energy;
     }

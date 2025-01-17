@@ -1,6 +1,5 @@
 package agh.ics.oop.maps;
 
-import agh.ics.oop.model.FullPredestination;
 import agh.ics.oop.model.GeneInterpreter;
 import agh.ics.oop.model.WorldTile;
 import agh.ics.oop.organisms.Animal;
@@ -9,19 +8,21 @@ import agh.ics.oop.organisms.Organism;
 import agh.ics.oop.organisms.Plant;
 import agh.ics.oop.records.Vector2d;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public abstract class AbstractWorldMap implements WorldMap {
-    protected final int width;
-    protected final int height;
-    protected final WorldTile[][] map;
+    protected static int width;
+    protected static int height;
+    protected static WorldTile[][] map;
     protected final GeneInterpreter geneInterpreter;
+    protected static int plantCount;
+
 
     public AbstractWorldMap(int width, int height,GeneInterpreter geneInterpreter) {
         this.width = width;
         this.height = height;
+        this.plantCount = 0;
         this.geneInterpreter = geneInterpreter;
         this.map = new WorldTile[width][height];
         for (int x = 0; x < width; x++){
@@ -30,6 +31,12 @@ public abstract class AbstractWorldMap implements WorldMap {
             }
         }
     }
+
+    public void addPlantCount(){ plantCount++; }
+
+    public void subtractPlantCount(){ plantCount--; }
+
+    public static int getPlantCount(){ return plantCount; }
 
     @Override
     public boolean isFieldEmpty(Vector2d position) {
@@ -58,6 +65,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     public void addPlant(Plant plant) {
         Vector2d poz = plant.getPosition();
         map[poz.x()][poz.y()].addPlant(plant);
+        addPlantCount();
     }
 
     public int getWidth() {
@@ -66,6 +74,16 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     public int getHeight() {
         return height;
+    }
+
+    public static int calculateEmptyTiles() {
+        int cnt = 0;
+        for (int y = 0; y < height; y++){
+            for (int x = 0; x < width; x++){
+                if (map[x][y].isEmpty()) {cnt++;}
+            }
+        }
+        return cnt;
     }
 
     @Override
@@ -94,6 +112,7 @@ public abstract class AbstractWorldMap implements WorldMap {
 
                 if (map[x][y].tryToConsumePlant())
                     positions.addFirst(new Vector2d(x,y));
+                    subtractPlantCount();
 
             }
         }
