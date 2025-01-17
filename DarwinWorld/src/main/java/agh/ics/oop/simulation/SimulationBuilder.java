@@ -46,7 +46,6 @@ public final class SimulationBuilder {
     private static GeneInterpreter createGeneInterpreter(SimParams params){
         if (params.animalBehaviourType() == 0) return new FullPredestination();
         if (params.animalBehaviourType() == 1) return new OldnessSadness();
-        //TODO - starość nie radość
         throw new IllegalArgumentException("The specified animal behaviour type is incorrect");
     }
 
