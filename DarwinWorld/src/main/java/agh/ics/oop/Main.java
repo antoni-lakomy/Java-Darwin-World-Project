@@ -15,12 +15,18 @@ import agh.ics.oop.records.Vector2d;
 import agh.ics.oop.simulation.Simulation;
 import agh.ics.oop.simulation.SimulationBuilder;
 import agh.ics.oop.util.MapVisualizer;
+import agh.ics.oop.util.SimulationApp;
+import javafx.application.Application;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+
+        Application.launch(SimulationApp.class,args);
+
+        /*
         System.out.println("Hello world");
 
         SimParams params = new SimParams(11,10,10,
@@ -41,6 +47,6 @@ public class Main {
             simulation.simulationStep();
         }
 
-
+        */
     }
 }
