@@ -14,8 +14,9 @@ import agh.ics.oop.records.SimParams;
 import agh.ics.oop.records.Vector2d;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 import java.util.Random;
+
 
 public final class SimulationBuilder {
 
@@ -71,9 +72,9 @@ public final class SimulationBuilder {
         return planter;
     }
 
-    private static List<Animal> createAnimals(SimParams params, WorldMap map, AnimalBuilder builder){
+    private static ArrayList<Animal> createAnimals(SimParams params, WorldMap map, AnimalBuilder builder){
         Random rng = new Random(params.seed());
-        List<Animal> animals = new ArrayList<>();
+        ArrayList<Animal> animals = new ArrayList<>();
 
         for (int i = 0; i < params.animalStartNumber(); i++){
             Vector2d position = new Vector2d(rng.nextInt(params.mapWidth()),rng.nextInt(params.mapHeight()));
@@ -81,6 +82,7 @@ public final class SimulationBuilder {
             map.addAnimal(animal);
             animals.addLast(animal);
         }
+        Simulation.updateGenomeFrequency(Collections.emptyList(), animals);
         return animals;
     }
 
