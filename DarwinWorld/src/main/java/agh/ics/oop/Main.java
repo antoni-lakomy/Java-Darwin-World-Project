@@ -12,10 +12,10 @@ public class Main {
         System.out.println("Hello world");
 
         SimParams params = new SimParams(11,10,10,
-                                1,10,30,
+                                0,10,10,
                             3,0,5,
-                        100,20,10,
-                    10, 1,0,4,0);
+                        30,20,10,
+                    10, 0,0,4,0);
 
 
         Simulation simulation = SimulationBuilder.build(params);
