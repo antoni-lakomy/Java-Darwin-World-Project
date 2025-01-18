@@ -138,7 +138,7 @@ class SimulationStatsTest {
         float avgLifespan = simulation.calcAvgLifespan();
 
         // Then the average age of all dead animals should equal 133
-        assertEquals(134.0, avgLifespan, "Expected average lifespan to be 133 days.");
+        assertEquals(134.0, avgLifespan, "Expected average lifespan to be 134 days.");
     }
 
     @Test

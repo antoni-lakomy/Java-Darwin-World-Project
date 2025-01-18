@@ -32,10 +32,6 @@ public abstract class AbstractWorldMap implements WorldMap {
         }
     }
 
-    public void addPlantCount(){ plantCount++; }
-
-    public void subtractPlantCount(){ plantCount--; }
-
     @Override
     public int getPlantCount(){ return plantCount; }
 
@@ -66,7 +62,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     public void addPlant(Plant plant) {
         Vector2d poz = plant.getPosition();
         map[poz.x()][poz.y()].addPlant(plant);
-        this.addPlantCount();
+        plantCount++;
     }
 
     public int getWidth() {
@@ -112,10 +108,10 @@ public abstract class AbstractWorldMap implements WorldMap {
         for (int y = 0; y < height; y++){
             for (int x = 0; x < width; x++){
 
-                if (map[x][y].tryToConsumePlant())
-                    positions.addFirst(new Vector2d(x,y));
-                    subtractPlantCount();
-
+                if (map[x][y].tryToConsumePlant()) {
+                    positions.addFirst(new Vector2d(x, y));
+                    plantCount--;
+                }
             }
         }
 
