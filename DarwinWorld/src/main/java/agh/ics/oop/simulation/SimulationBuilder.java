@@ -33,6 +33,7 @@ public final class SimulationBuilder {
         sim.planter = createPlanter(params,map);
 
         sim.aliveAnimals = createAnimals(params,map,builder);
+        sim.updateGenomeFrequency(Collections.emptyList(), sim.aliveAnimals);
 
         sim.animalFedThreshold = params.animalFedThreshold();
 
@@ -80,8 +81,8 @@ public final class SimulationBuilder {
             Animal animal = builder.buildFresh(position);
             map.addAnimal(animal);
             animals.addLast(animal);
+
         }
-        Simulation.updateGenomeFrequency(Collections.emptyList(), animals);
         return animals;
     }
 

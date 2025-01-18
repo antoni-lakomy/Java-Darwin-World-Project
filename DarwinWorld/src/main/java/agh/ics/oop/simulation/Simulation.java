@@ -23,7 +23,7 @@ public class Simulation {
     //TODO
     protected List<Animal> deadAnimals;
 
-    protected static Map<List<Byte>, Integer> genomeFrequency = new HashMap<>();
+    protected Map<List<Byte>, Integer> genomeFrequency = new HashMap<>();
 
     protected int animalFedThreshold;
 
@@ -33,12 +33,6 @@ public class Simulation {
 
     private final List<SimObserver> observers = new ArrayList<>();
 
-    public List<Animal> getAliveAnimals() {return aliveAnimals;}
-
-    public int getAliveAnimalsCount() {return aliveAnimals.size();}
-
-    public int getPlantsCount() {return AbstractWorldMap.getPlantCount();}
-
     public void addObserver(SimObserver observer){
         observers.addLast(observer);
     }
@@ -47,9 +41,7 @@ public class Simulation {
         return observers.remove(observer);
     }
 
-    public int getEmptyTilesCount() {return AbstractWorldMap.calculateEmptyTiles();}
-
-    public static void updateGenomeFrequency(List<Animal> deadThisStep, List<Animal> newThisStep) {
+    public void updateGenomeFrequency(List<Animal> deadThisStep, List<Animal> newThisStep) {
         // Remove genome frequencies for dead animals
         for (Animal deadAnimal : deadThisStep) {
             List<Byte> genome = Arrays.asList(deadAnimal.getGenome());
@@ -113,19 +105,19 @@ public class Simulation {
     }
 
     public void stats() {
-        getAliveAnimals();
-        getPlantsCount();
-        getEmptyTilesCount();
-        findMostPopularGenome();
-        calcAvgEnergy();
-        calcAvgLifespan();
-        calcAvgChildren();
+        System.out.println(aliveAnimals.size());
+        System.out.println(map.getPlantCount());
+        System.out.println(map.calculateEmptyTiles());
+        System.out.println(this.findMostPopularGenome());
+        System.out.println(this.calcAvgEnergy());
+        System.out.println(this.calcAvgLifespan());
+        System.out.println(this.calcAvgChildren());
     }
 
 
     public void visualStats() {
-        getAnimalsWithGivenGenome(findMostPopularGenome());  //stay aware of complexity
-        ForestedEquators.getPreferredTiles();
+        this.getAnimalsWithGivenGenome(findMostPopularGenome());  //stay aware of complexity
+        planter.getPreferredTiles();
     }
 
     private void simUpdated(){
