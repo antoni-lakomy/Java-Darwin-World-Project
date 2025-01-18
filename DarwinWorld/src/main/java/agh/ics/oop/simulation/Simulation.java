@@ -7,6 +7,7 @@ import agh.ics.oop.organisms.Animal;
 import agh.ics.oop.organisms.AnimalBuilder;
 import agh.ics.oop.planters.ForestedEquators;
 import agh.ics.oop.planters.Planter;
+import agh.ics.oop.util.ByteComparator;
 
 import java.util.*;
 
@@ -15,6 +16,8 @@ public class Simulation {
     protected WorldMap map;
 
     protected Planter planter;
+
+    protected ByteComparator byteComparator = new ByteComparator();
 
     protected AnimalBuilder animalBuilder;
 
@@ -114,7 +117,7 @@ public class Simulation {
     public List<Animal> getAnimalsWithGivenGenome(Byte[] genome) {
         List<Animal> animalsWithGenome = new ArrayList<>();
         for (Animal animal : aliveAnimals) {
-            if (animal.getGenome().equals(genome)) {
+            if (byteComparator.equals(genome, animal.getGenome())) {
                 animalsWithGenome.add(animal);
             }
         }
