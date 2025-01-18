@@ -37,10 +37,10 @@ public class Poles extends AbstractWorldMap {
 
     // closer it gets to Pole, higher cost of move gets. Energy rises gradually starting at 1, up to 10.
     public int calculateEnergy(int positionY) {
-        int mapHeight = getHeight();
-        int distance = min(positionY, mapHeight - positionY);
-        int demandedEnergy = max(1, maxMoveCost - ((distance * 2 / mapHeight) * maxMoveCost));
-        // distance * 2, because its maximal value is mapHeight / 2
+        int distance = min(positionY, this.height - positionY);
+        int demandedEnergy = max(1, (int)(maxMoveCost - (((float)distance * 2 / this.height) * maxMoveCost)));
+        // distance * 2, because its maximal value is height / 2
+        System.out.println(demandedEnergy);
         return demandedEnergy;
     }
 

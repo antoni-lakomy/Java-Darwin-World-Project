@@ -29,7 +29,7 @@ public class OldnessSadness implements  GeneInterpreter {
         int odds = 80;
         // calculates % part of animalAge of boundAge and decreases it by 20% to make it cap at 80%
         if (animalAge < boundAge) {
-            odds = (int) ((animalAge / boundAge) * 100 * 0.8f);
+            odds = (int) (((float)animalAge / boundAge) * 100 * 0.8f);
         }
         int result = rand.nextInt(100);
         if (result < odds) {animal.setSkippingMove(true);}
