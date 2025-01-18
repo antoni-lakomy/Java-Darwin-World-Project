@@ -17,7 +17,7 @@ public class ForestedEquators implements Planter{
 
     private final int plantEnergy;
 
-    private static List<Vector2d> preferredTiles;
+    private List<Vector2d> preferredTiles;
 
     private List<Vector2d> normalTiles;
 
@@ -25,7 +25,8 @@ public class ForestedEquators implements Planter{
 
     private final float maxEquator;
 
-    public static List<Vector2d> getPreferredTiles() {return preferredTiles;}
+    @Override
+    public List<Vector2d> getPreferredTiles() {return this.preferredTiles;}
 
     public ForestedEquators(WorldMap map, int plantEnergy, long seed){
         this.map = map;

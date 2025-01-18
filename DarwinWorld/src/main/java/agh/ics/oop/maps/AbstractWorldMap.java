@@ -12,11 +12,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class AbstractWorldMap implements WorldMap {
-    protected static int width;
-    protected static int height;
-    protected static WorldTile[][] map;
+    protected int width;
+    protected int height;
+    protected WorldTile[][] map;
     protected final GeneInterpreter geneInterpreter;
-    protected static int plantCount;
+    protected int plantCount;
 
 
     public AbstractWorldMap(int width, int height,GeneInterpreter geneInterpreter) {
@@ -36,7 +36,8 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     public void subtractPlantCount(){ plantCount--; }
 
-    public static int getPlantCount(){ return plantCount; }
+    @Override
+    public int getPlantCount(){ return plantCount; }
 
     @Override
     public boolean isFieldEmpty(Vector2d position) {
@@ -65,7 +66,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     public void addPlant(Plant plant) {
         Vector2d poz = plant.getPosition();
         map[poz.x()][poz.y()].addPlant(plant);
-        addPlantCount();
+        this.addPlantCount();
     }
 
     public int getWidth() {
@@ -76,7 +77,8 @@ public abstract class AbstractWorldMap implements WorldMap {
         return height;
     }
 
-    public static int calculateEmptyTiles() {
+    @Override
+    public int calculateEmptyTiles() {
         int cnt = 0;
         for (int y = 0; y < height; y++){
             for (int x = 0; x < width; x++){
