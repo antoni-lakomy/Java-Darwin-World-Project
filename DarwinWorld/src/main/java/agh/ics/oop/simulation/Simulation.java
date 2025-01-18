@@ -20,7 +20,6 @@ public class Simulation {
 
     protected List<Animal> aliveAnimals;
 
-    //TODO
     protected List<Animal> deadAnimals;
 
     protected Map<List<Byte>, Integer> genomeFrequency = new HashMap<>();
@@ -40,6 +39,22 @@ public class Simulation {
     public boolean removeObserver(SimObserver observer){
         return observers.remove(observer);
     }
+
+    public void addElemToAliveAnimals(Animal animal){ aliveAnimals.add(animal); } //for tests purpose
+
+    public void removeElemFromAliveAnimals(Animal animal){ aliveAnimals.remove(animal); } //for test purpose
+
+    public Animal getAliveAnimal(int index){ return aliveAnimals.get(index); } //for test purpose
+
+    public List<Animal> getAliveAnimals() { return aliveAnimals; } //for test purpose
+
+    public int getAliveAnimalsSize(){ return aliveAnimals.size(); } //for test purpose
+
+    public void addElemToDeadAnimals(Animal animal) { deadAnimals.add(animal); } //for testing purpose
+
+    public Planter getPlanter() { return planter; } //for test purpose
+
+    public WorldMap getMap() { return map; } // for test purpose
 
     public void updateGenomeFrequency(List<Animal> deadThisStep, List<Animal> newThisStep) {
         // Remove genome frequencies for dead animals
@@ -70,28 +85,30 @@ public class Simulation {
     }
 
 
-    public int calcAvgEnergy() {
+    public float calcAvgEnergy() {
         int totalEnergy = 0;
         for (Animal animal : aliveAnimals) {
             totalEnergy += animal.getEnergy();
         }
-        return totalEnergy / aliveAnimals.size();
+        return (float)totalEnergy / aliveAnimals.size();
     }
 
-    public int calcAvgLifespan() {
+    public float calcAvgLifespan() {
         int totalLifespan = 0;
         for (Animal animal : deadAnimals) {
             totalLifespan += animal.getAge();
         }
-        return totalLifespan / deadAnimals.size();
+        if (deadAnimals.size() > 0) {return (float)totalLifespan / deadAnimals.size();}
+        return 0;
+
     }
 
-    public int calcAvgChildren() {
+    public float calcAvgChildren() {
         int totalChildren = 0;
         for (Animal animal : aliveAnimals) {
             totalChildren += animal.getChildren().size();
         }
-        return totalChildren / aliveAnimals.size();
+        return (float)totalChildren / aliveAnimals.size();
     }
 
     public List<Animal> getAnimalsWithGivenGenome(Byte[] genome) {

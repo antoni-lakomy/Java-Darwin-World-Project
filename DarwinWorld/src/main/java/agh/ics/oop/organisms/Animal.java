@@ -46,6 +46,8 @@ public class Animal extends Organism{
 
     public List<Animal> getChildren() { return children;}
 
+    public void addChild(Animal child) { children.add(child); } //for test purpose
+
     public int getPlantsEaten() {return plantsEaten;}
 
     public void addPlantsEaten() {plantsEaten++;}
