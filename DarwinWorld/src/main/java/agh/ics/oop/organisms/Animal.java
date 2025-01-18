@@ -40,6 +40,8 @@ public class Animal extends Organism{
 
     public int getAge() {return age; }
 
+    public void setAge(int age) { this.age = age; } //for test purpose
+
     public List<Animal> getParents() { return parents; }
 
     public List<Animal> getChildren() { return children;}

@@ -19,7 +19,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     protected int plantCount;
 
 
-    public AbstractWorldMap(int width, int height,GeneInterpreter geneInterpreter) {
+    public AbstractWorldMap(int width, int height, GeneInterpreter geneInterpreter) {
         this.width = width;
         this.height = height;
         this.plantCount = 0;
