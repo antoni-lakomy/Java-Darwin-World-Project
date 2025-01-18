@@ -175,4 +175,3 @@ class SimulationStatsTest {
         assertEquals(0.5, avgChildren, "Expected average number of children to be 0.5");
     }
 }
-
