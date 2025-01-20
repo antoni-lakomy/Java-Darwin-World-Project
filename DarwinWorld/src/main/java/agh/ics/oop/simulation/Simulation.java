@@ -10,7 +10,7 @@ import agh.ics.oop.planters.Planter;
 
 import java.util.*;
 
-public class Simulation {
+public class Simulation implements Runnable{
 
     protected WorldMap map;
 
@@ -33,6 +33,33 @@ public class Simulation {
 
     private final List<SimObserver> observers = new ArrayList<>();
 
+    private boolean shutDown = false;
+
+    private boolean paused = false;
+
+    private float timePerStep = 0.5f;
+
+    //Precalculated statistics
+    private float avgEnergy;
+    private float avgLifespan;
+    private float avgChildren;
+    private Byte[] mostPopularGenome;
+    private int plantCount;
+    private int emptyTiles;
+
+    public float getAvgEnergy() {return avgEnergy;}
+
+    public float getAvgLifespan() {return avgLifespan;}
+
+    public float getAvgChildren() {return avgChildren;}
+
+    public Byte[] getMostPopularGenome() {return mostPopularGenome;}
+
+    public int getPlantCount() {return plantCount;}
+
+    public int getEmptyTiles() {return emptyTiles;}
+
+
     public void addObserver(SimObserver observer){
         observers.addLast(observer);
     }
@@ -51,13 +78,13 @@ public class Simulation {
 
     public int getAliveAnimalsSize(){ return aliveAnimals.size(); }
 
-    public
+    public int getDeadAnimalsSize() { return  deadAnimals.size(); }
 
     public void addElemToDeadAnimals(Animal animal) { deadAnimals.add(animal); } //for testing purpose
 
     public Planter getPlanter() { return planter; } //for test purpose
 
-    public WorldMap getMap() { return map; } // for test purpose
+    public WorldMap getMap() { return map; }
 
     public void updateGenomeFrequency(List<Animal> deadThisStep, List<Animal> newThisStep) {
         // Remove genome frequencies for dead animals
@@ -124,16 +151,14 @@ public class Simulation {
         return animalsWithGenome;
     }
 
-    public void stats() {
-        System.out.println(aliveAnimals.size());
-        System.out.println(map.getPlantCount());
-        System.out.println(map.calculateEmptyTiles());
-        System.out.println(this.findMostPopularGenome());
-        System.out.println(this.calcAvgEnergy());
-        System.out.println(this.calcAvgLifespan());
-        System.out.println(this.calcAvgChildren());
+    public void updateStats() {
+        plantCount = map.getPlantCount();
+        emptyTiles = map.calculateEmptyTiles();
+        mostPopularGenome = findMostPopularGenome();
+        avgEnergy = calcAvgEnergy();
+        avgLifespan = calcAvgLifespan();
+        avgChildren = calcAvgChildren();
     }
-
 
     public void visualStats() {
         this.getAnimalsWithGivenGenome(findMostPopularGenome());  //stay aware of complexity
@@ -149,6 +174,7 @@ public class Simulation {
 
 
     public void simulationStep(){
+        updateStats();
         simUpdated();
 
         //1
@@ -174,5 +200,41 @@ public class Simulation {
         // Update genome frequency
         updateGenomeFrequency(deadThisStep, newThisStep);
     }
+
+
+
+    public synchronized void shutDown(){
+        System.out.println("Shutting down a simulation");
+        this.shutDown = true;
+    }
+
+    public synchronized void changeStep(float step){
+        this.timePerStep = step;
+    }
+
+    public synchronized void changePause(){
+        this.paused = !this.paused;
+    }
+
+    @Override
+    public void run() {
+        while (true){
+            long time1 = System.nanoTime();
+            if(!paused) {
+                simulationStep();
+            }
+            long time2 = System.nanoTime();
+
+            if (shutDown){
+                return;
+            }
+            try{
+                Thread.sleep(Math.round(Math.max(0,timePerStep* 1000 - (float) (time2 - time1) /1000000)));
+            } catch (InterruptedException e){
+                System.err.println(e.getMessage());
+            }
+        }
+    }
+
 }
 

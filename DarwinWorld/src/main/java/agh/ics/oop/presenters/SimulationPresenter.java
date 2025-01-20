@@ -11,6 +11,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
+import java.util.Arrays;
+
 
 public class SimulationPresenter implements SimObserver {
 
@@ -22,8 +27,25 @@ public class SimulationPresenter implements SimObserver {
 
     @FXML Label aliveAnimals;
     @FXML Label deadAnimals;
+    @FXML Label avgEnergy;
+    @FXML Label avgLifespan;
+    @FXML Label avgChildren;
+    @FXML Label mostPopularGenome;
+    @FXML Label plantCount;
+    @FXML Label emptyTiles;
 
 
+
+    Simulation simulation;
+
+    @FXML
+    public void closeWindowEvent(WindowEvent event) {
+        simulation.shutDown();
+    }
+
+    public void setSimulation(Simulation simulation){
+        this.simulation = simulation;
+    }
 
     @Override
     public void update(Simulation simulation) {
@@ -33,12 +55,22 @@ public class SimulationPresenter implements SimObserver {
         });
     }
 
-    public void updateStatistics(Simulation simulation){
-        aliveAnimals.setText("Alive Animals: " + simulation.getAliveAnimalsSize());
-        deadAnimals.setText("Dead Animals: " + simulation.deadAnimals.size());
+    public synchronized void pauseUnpauseSimulation(){
+        simulation.changePause();
     }
 
-    public void drawMap(Simulation simulation){
+    public synchronized void updateStatistics(Simulation simulation){
+        aliveAnimals.setText("Alive Animals: " + simulation.getAliveAnimalsSize());
+        deadAnimals.setText("Dead Animals: " + simulation.getDeadAnimalsSize());
+        avgEnergy.setText("Avg Energy: " + simulation.getAvgEnergy());
+        avgLifespan.setText("Avg Lifespan: " + simulation.getAvgLifespan());
+        avgChildren.setText("Avg Children: " + simulation.getAvgChildren());
+        mostPopularGenome.setText("Most Popular Genome:\n" + Arrays.toString(this.simulation.getMostPopularGenome()));
+        plantCount.setText("Plant Count: " + simulation.getPlantCount());
+        emptyTiles.setText("Empty Tiles: " + simulation.getEmptyTiles());
+    }
+
+    public synchronized void drawMap(Simulation simulation){
         clearGrid();
         WorldMap map = simulation.getMap();
 

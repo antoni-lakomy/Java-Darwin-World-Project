@@ -19,8 +19,16 @@
     </center>
     <left>
         <VBox>
-            <Label fx:id="aliveAnimals" text="Alive Animals: NaN"></Label>
-            <Label fx:id="deadAnimals" text="Dead Animals: NaN"></Label>
+            <Label fx:id="aliveAnimals" text="Alive Animals: NaN"/>
+            <Label fx:id="deadAnimals" text="Dead Animals: NaN"/>
+            <Label fx:id="avgEnergy" text="Avg Energy: NaN"/>
+            <Label fx:id="avgLifespan" text="Avg Lifespan: NaN"/>
+            <Label fx:id="avgChildren" text="Avg Children: NaN"/>
+            <Label fx:id="mostPopularGenome" text="Most Popular Genome:\n NaN"/>
+            <Label fx:id="plantCount" text="Plant Count: NaN"/>
+            <Label fx:id="emptyTiles" text="Empty Tiles: NaN"/>
+            <Button onAction="#pauseUnpauseSimulation" text="Change Pause" alignment="CENTER">
+            </Button>
         </VBox>
     </left>
 </BorderPane>
