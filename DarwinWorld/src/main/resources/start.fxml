@@ -14,7 +14,7 @@
             fx:controller="agh.ics.oop.presenters.StartPresenter">
     <padding><Insets top="10" bottom="10" right="10" left="10"/></padding>
     <center>
-        <VBox alignment="BASELINE_CENTER">
+        <VBox fx:id="mainBox" alignment="BASELINE_CENTER">
 
 
             <Label styleClass="categoryLabels" alignment="CENTER" textFill="black">
@@ -146,6 +146,9 @@
 
             <Button onAction="#onSimulationStartClicked" text="Start" alignment="CENTER">
             </Button>
+
+
+
 
         </VBox>
     </center>
