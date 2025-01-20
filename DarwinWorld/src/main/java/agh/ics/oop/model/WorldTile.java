@@ -137,6 +137,7 @@ public class WorldTile {
         if (animals.isEmpty()) return false;
         if (plant != null){
             animals.getFirst().addEnergy(plant.getEnergy());
+            animals.getFirst().addPlantsEaten();
             plant = null;
             return true;
         }
