@@ -18,7 +18,7 @@ public class Simulation {
 
     protected AnimalBuilder animalBuilder;
 
-    public List<Animal> aliveAnimals;
+    protected List<Animal> aliveAnimals;
 
     protected List<Animal> deadAnimals;
 
@@ -49,7 +49,9 @@ public class Simulation {
 
     public List<Animal> getAliveAnimals() { return aliveAnimals; } //for test purpose
 
-    public int getAliveAnimalsSize(){ return aliveAnimals.size(); } //for test purpose
+    public int getAliveAnimalsSize(){ return aliveAnimals.size(); }
+
+    public
 
     public void addElemToDeadAnimals(Animal animal) { deadAnimals.add(animal); } //for testing purpose
 

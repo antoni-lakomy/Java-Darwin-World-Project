@@ -34,7 +34,7 @@ public class SimulationPresenter implements SimObserver {
     }
 
     public void updateStatistics(Simulation simulation){
-        aliveAnimals.setText("Alive Animals: " + simulation.aliveAnimals.size());
+        aliveAnimals.setText("Alive Animals: " + simulation.getAliveAnimalsSize());
         deadAnimals.setText("Dead Animals: " + simulation.deadAnimals.size());
     }
 
