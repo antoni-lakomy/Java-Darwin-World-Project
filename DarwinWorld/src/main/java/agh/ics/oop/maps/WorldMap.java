@@ -108,4 +108,9 @@ public interface WorldMap {
      * @return A list of the removed animals
      */
     List<Animal> removeDead();
+
+    int calculateEmptyTiles();
+
+    //Getter of plantCount attribute.
+    int getPlantCount();
 }

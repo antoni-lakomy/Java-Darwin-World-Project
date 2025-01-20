@@ -5,6 +5,7 @@ import agh.ics.oop.maps.Poles;
 import agh.ics.oop.maps.WorldMap;
 import agh.ics.oop.model.FullPredestination;
 import agh.ics.oop.model.GeneInterpreter;
+import agh.ics.oop.model.OldnessSadness;
 import agh.ics.oop.organisms.Animal;
 import agh.ics.oop.organisms.AnimalBuilder;
 import agh.ics.oop.planters.ForestedEquators;
@@ -13,8 +14,9 @@ import agh.ics.oop.records.SimParams;
 import agh.ics.oop.records.Vector2d;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 import java.util.Random;
+
 
 public final class SimulationBuilder {
 
@@ -31,6 +33,7 @@ public final class SimulationBuilder {
         sim.planter = createPlanter(params,map);
 
         sim.aliveAnimals = createAnimals(params,map,builder);
+        sim.updateGenomeFrequency(Collections.emptyList(), sim.aliveAnimals);
 
         sim.animalFedThreshold = params.animalFedThreshold();
 
@@ -43,7 +46,7 @@ public final class SimulationBuilder {
 
     private static GeneInterpreter createGeneInterpreter(SimParams params){
         if (params.animalBehaviourType() == 0) return new FullPredestination();
-        //TODO - starość nie radość
+        if (params.animalBehaviourType() == 1) return new OldnessSadness();
         throw new IllegalArgumentException("The specified animal behaviour type is incorrect");
     }
 
@@ -69,15 +72,16 @@ public final class SimulationBuilder {
         return planter;
     }
 
-    private static List<Animal> createAnimals(SimParams params, WorldMap map, AnimalBuilder builder){
+    private static ArrayList<Animal> createAnimals(SimParams params, WorldMap map, AnimalBuilder builder){
         Random rng = new Random(params.seed());
-        List<Animal> animals = new ArrayList<>();
+        ArrayList<Animal> animals = new ArrayList<>();
 
         for (int i = 0; i < params.animalStartNumber(); i++){
             Vector2d position = new Vector2d(rng.nextInt(params.mapWidth()),rng.nextInt(params.mapHeight()));
             Animal animal = builder.buildFresh(position);
             map.addAnimal(animal);
             animals.addLast(animal);
+
         }
         return animals;
     }

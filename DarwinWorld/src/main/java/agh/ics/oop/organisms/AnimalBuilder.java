@@ -36,6 +36,17 @@ public class AnimalBuilder {
         this.maxMutation = params.animalMaxMutation();
     }
 
+    public AnimalBuilder(){ //for testing purpose
+        this.rng = new Random(100);
+        this.genomeLength = 10;
+        this.startingEnergy = 100;
+        this.directions = 8;
+        this.reproductionCost = 10;
+        this.minMutation = 0;
+        this.maxMutation = 3;
+    }
+
+
     /**
      * Creates a new animal at a given position, with a given energy and genome.
      * Used mostly as an internal function, but is made available for testing purposes.
