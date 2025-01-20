@@ -1,7 +1,6 @@
 package agh.ics.oop.planters;
 
 import agh.ics.oop.maps.WorldMap;
-import agh.ics.oop.organisms.Animal;
 import agh.ics.oop.organisms.Plant;
 import agh.ics.oop.records.Vector2d;
 
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class ForestedEquators implements Planter{
 
@@ -26,6 +24,9 @@ public class ForestedEquators implements Planter{
     private final float minEquator;
 
     private final float maxEquator;
+
+    @Override
+    public List<Vector2d> getPreferredTiles() {return this.preferredTiles;}
 
     public ForestedEquators(WorldMap map, int plantEnergy, long seed){
         this.map = map;
