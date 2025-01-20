@@ -17,10 +17,10 @@ public class Simulation {
 
     protected AnimalBuilder animalBuilder;
 
-    protected List<Animal> aliveAnimals;
+    public List<Animal> aliveAnimals;
 
     //TODO
-    protected List<Animal> deadAnimals;
+    public List<Animal> deadAnimals;
 
     protected int animalFedThreshold;
 
@@ -40,7 +40,7 @@ public class Simulation {
 
     private void simUpdated(){
         for (SimObserver observer : observers){
-            observer.update(map);
+            observer.update(this);
         }
     }
 
@@ -66,5 +66,9 @@ public class Simulation {
 
         //5
         planter.plant(plantGrowth);
+    }
+
+    public WorldMap getMap() {
+        return map;
     }
 }

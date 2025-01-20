@@ -5,17 +5,20 @@ import agh.ics.oop.records.SimParams;
 import agh.ics.oop.simulation.Simulation;
 import agh.ics.oop.simulation.SimulationBuilder;
 import agh.ics.oop.simulation.SimulationDriver;
+import agh.ics.oop.util.SimulationApp;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-
-import java.security.InvalidParameterException;
+import javafx.scene.paint.Paint;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 
 
 public class StartPresenter {
 
-    private Application app;
+    private SimulationApp app;
 
     @FXML
     private TextField seedField;
@@ -84,10 +87,27 @@ public class StartPresenter {
     int animalMinMutation;
     int animalMaxMutation;
 
-    public void setApp(Application app) {
+    private Popup popup;
+
+    private Label popupLabel;
+
+    private Stage stage;
+
+    public void setUp(SimulationApp app, Stage stage) {
         this.app = app;
+        this.stage = stage;
+
+        popup = new Popup();
+        popup.setAutoHide(true);
+        popupLabel = new Label();
+        popup.getContent().add(popupLabel);
     }
 
+    public void displayPopup(String message, Paint color){
+        popupLabel.setTextFill(color);
+        popupLabel.setText(message);
+        popup.show(stage);
+    }
 
     private Long verifyLong(TextField textField, String name){
         if (textField.getText().isEmpty()) throw new IllegalArgumentException(name + " is empty.");
@@ -106,7 +126,7 @@ public class StartPresenter {
         } catch (Exception e){
             throw new IllegalArgumentException(name + " is not numeric");
         }
-        if (result < minValue) throw new IllegalArgumentException(name + "is less then the min value of " + minValue);
+        if (result < minValue) throw new IllegalArgumentException(name + " is less then the min value of " + minValue);
         return result;
     }
 
@@ -135,6 +155,9 @@ public class StartPresenter {
 
         if (animalMinMutation > animalMaxMutation)
             throw new IllegalArgumentException("Min Mutation can't be higher then Max Mutation");
+
+        if (animalMaxMutation > animalGenomeLength)
+            throw new IllegalArgumentException("Max Mutation can't be higher then Genome Length");
 
         mapType = mapTypeField.getItems().indexOf(mapTypeField.getValue());
         animalBehaviourType = animalBehaviourTypeField.getItems().indexOf(animalBehaviourTypeField.getValue());
@@ -167,13 +190,14 @@ public class StartPresenter {
             verifyData();
             SimParams parameters = createSimParams();
             Simulation simulation = SimulationBuilder.build(parameters);
-            ConsoleDisplay display = new ConsoleDisplay();
-            simulation.addObserver(display);
+
+            app.startSimulation(simulation);
+
             SimulationDriver driver = new SimulationDriver(simulation);
             Thread thread = new Thread(driver);
             thread.start();
         } catch (Exception e){
-            System.err.println(e.getMessage());
+            displayPopup(e.getMessage(),Paint.valueOf("red"));
         }
     }
 
