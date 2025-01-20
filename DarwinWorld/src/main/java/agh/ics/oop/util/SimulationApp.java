@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public class SimulationApp extends Application {
 
-    //TODO - closing threads
+
     private StartPresenter mainPresenter;
 
     @Override
@@ -28,9 +28,14 @@ public class SimulationApp extends Application {
         this.mainPresenter = loader.getController();
         mainPresenter.setUp(this,stage);
 
-
         configureStage(stage,viewRoot,"Simulation Starter");
+
         stage.show();
+    }
+
+    @Override
+    public void stop(){
+        mainPresenter.exit();
     }
 
     private void configureStage(Stage stage, BorderPane viewRoot, String name) {
@@ -50,7 +55,9 @@ public class SimulationApp extends Application {
         BorderPane viewRoot = loader.load();
 
         SimulationPresenter presenter = loader.getController();
+        presenter.setSimulation(simulation);
         simulation.addObserver(presenter);
+        stage.setOnCloseRequest(event -> {presenter.closeWindowEvent(event);});
 
         configureStage(stage,viewRoot,"Simulation");
         stage.show();

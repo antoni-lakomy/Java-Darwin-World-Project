@@ -93,6 +93,8 @@ public class StartPresenter {
 
     private Stage stage;
 
+    SimulationDriver driver = new SimulationDriver();
+
     public void setUp(SimulationApp app, Stage stage) {
         this.app = app;
         this.stage = stage;
@@ -192,15 +194,16 @@ public class StartPresenter {
             Simulation simulation = SimulationBuilder.build(parameters);
 
             app.startSimulation(simulation);
+            driver.addToThePool(simulation);
 
-            SimulationDriver driver = new SimulationDriver(simulation);
-            Thread thread = new Thread(driver);
-            thread.start();
         } catch (Exception e){
             displayPopup(e.getMessage(),Paint.valueOf("red"));
         }
     }
 
+    public void exit(){
+        driver.shutdownThePool();
+    }
 
 
 }
