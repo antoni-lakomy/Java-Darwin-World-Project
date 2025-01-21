@@ -10,7 +10,7 @@ import agh.ics.oop.planters.Planter;
 
 import java.util.*;
 
-public class Simulation implements Runnable{
+public class Simulation implements Runnable {
 
     protected WorldMap map;
 
@@ -31,7 +31,8 @@ public class Simulation implements Runnable{
 
     protected int simulationDay;
 
-    protected Simulation(){}
+    protected Simulation() {
+    }
 
     private final List<SimObserver> observers = new ArrayList<>();
 
@@ -50,45 +51,77 @@ public class Simulation implements Runnable{
     private int plantCount;
     private int emptyTiles;
 
-    public float getAvgEnergy() {return avgEnergy;}
+    public float getAvgEnergy() {
+        return avgEnergy;
+    }
 
-    public float getAvgLifespan() {return avgLifespan;}
+    public float getAvgLifespan() {
+        return avgLifespan;
+    }
 
-    public float getAvgChildren() {return avgChildren;}
+    public float getAvgChildren() {
+        return avgChildren;
+    }
 
-    public Byte[] getMostPopularGenome() {return mostPopularGenome;}
+    public Byte[] getMostPopularGenome() {
+        return mostPopularGenome;
+    }
 
-    public int getPlantCount() {return plantCount;}
+    public int getPlantCount() {
+        return plantCount;
+    }
 
-    public int getEmptyTiles() {return emptyTiles;}
+    public int getEmptyTiles() {
+        return emptyTiles;
+    }
 
-    public int getSimulationDay() {return simulationDay;}
+    public int getSimulationDay() {
+        return simulationDay;
+    }
 
-    public void addObserver(SimObserver observer){
+    public void addObserver(SimObserver observer) {
         observers.addLast(observer);
     }
 
-    public boolean removeObserver(SimObserver observer){
+    public boolean removeObserver(SimObserver observer) {
         return observers.remove(observer);
     }
 
-    public void addElemToAliveAnimals(Animal animal){ aliveAnimals.add(animal); } //for tests purpose
+    public void addElemToAliveAnimals(Animal animal) {
+        aliveAnimals.add(animal);
+    } //for tests purpose
 
-    public void removeElemFromAliveAnimals(Animal animal){ aliveAnimals.remove(animal); } //for test purpose
+    public void removeElemFromAliveAnimals(Animal animal) {
+        aliveAnimals.remove(animal);
+    } //for test purpose
 
-    public Animal getAliveAnimal(int index){ return aliveAnimals.get(index); } //for test purpose
+    public Animal getAliveAnimal(int index) {
+        return aliveAnimals.get(index);
+    } //for test purpose
 
-    public List<Animal> getAliveAnimals() { return aliveAnimals; } //for test purpose
+    public List<Animal> getAliveAnimals() {
+        return aliveAnimals;
+    } //for test purpose
 
-    public int getAliveAnimalsSize(){ return aliveAnimals.size(); }
+    public int getAliveAnimalsSize() {
+        return aliveAnimals.size();
+    }
 
-    public int getDeadAnimalsSize() { return  deadAnimals.size(); }
+    public int getDeadAnimalsSize() {
+        return deadAnimals.size();
+    }
 
-    public void addElemToDeadAnimals(Animal animal) { deadAnimals.add(animal); } //for testing purpose
+    public void addElemToDeadAnimals(Animal animal) {
+        deadAnimals.add(animal);
+    } //for testing purpose
 
-    public Planter getPlanter() { return planter; } //for test purpose
+    public Planter getPlanter() {
+        return planter;
+    } //for test purpose
 
-    public WorldMap getMap() { return map; }
+    public WorldMap getMap() {
+        return map;
+    }
 
     public void updateGenomeFrequency(List<Animal> deadThisStep, List<Animal> newThisStep) {
         // Remove genome frequencies for dead animals
@@ -119,14 +152,13 @@ public class Simulation implements Runnable{
     }
 
 
-
     public float calcAvgEnergy() {
         int totalEnergy = 0;
         for (Animal animal : aliveAnimals) {
             totalEnergy += animal.getEnergy();
         }
-        if (aliveAnimals.isEmpty()) return 0
-        return (float)totalEnergy / aliveAnimals.size();
+        if (aliveAnimals.isEmpty()) return 0;
+        return (float) totalEnergy / aliveAnimals.size();
     }
 
     public float calcAvgLifespan() {
@@ -134,10 +166,11 @@ public class Simulation implements Runnable{
         for (Animal animal : deadAnimals) {
             totalLifespan += animal.getAge();
         }
-        if (deadAnimals.size() > 0) {return (float)totalLifespan / deadAnimals.size();}
-        return 0;
-
+        if (deadAnimals.isEmpty()) return 0;
+        return (float) totalLifespan / deadAnimals.size();
     }
+
+
 
     public float calcAvgChildren() {
         int totalChildren = 0;
@@ -161,7 +194,7 @@ public class Simulation implements Runnable{
     public void updateStats() {
         plantCount = map.getPlantCount();
         emptyTiles = map.calculateEmptyTiles();
-        //mostPopularGenome = findMostPopularGenome();
+        mostPopularGenome = findMostPopularGenome();
         avgEnergy = calcAvgEnergy();
         avgLifespan = calcAvgLifespan();
         avgChildren = calcAvgChildren();
