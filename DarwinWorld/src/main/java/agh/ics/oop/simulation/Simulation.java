@@ -125,7 +125,7 @@ public class Simulation implements Runnable{
         for (Animal animal : aliveAnimals) {
             totalEnergy += animal.getEnergy();
         }
-        if (aliveAnimals.isEmpty()) return 0
+        if (aliveAnimals.isEmpty()) return 0;
         return (float)totalEnergy / aliveAnimals.size();
     }
 
