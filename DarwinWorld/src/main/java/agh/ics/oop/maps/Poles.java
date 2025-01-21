@@ -2,6 +2,7 @@ package agh.ics.oop.maps;
 
 import agh.ics.oop.model.GeneInterpreter;
 import agh.ics.oop.organisms.Animal;
+import agh.ics.oop.planters.ForestedEquators;
 import agh.ics.oop.records.Vector2d;
 
 import static java.lang.Math.max;
@@ -35,12 +36,14 @@ public class Poles extends AbstractWorldMap {
         animal.setPosition(newPosition);
     }
 
-    // closer it gets to Pole, higher cost of move gets. Energy rises gradually starting at 1, up to 10.
+    // Closer it gets to Pole, higher cost of move gets, except equators, where energy required is always 1.
+    // Since an animal stepped out of the equator - its move energy rises gradually starting at 2, up to maxMoveCost.
     public int calculateEnergy(int positionY) {
-        int distance = min(positionY, this.height - positionY);
-        int demandedEnergy = max(1, (int)(maxMoveCost - (((float)distance * 2 / this.height) * maxMoveCost)));
-        // distance * 2, because its maximal value is height / 2
-        System.out.println(demandedEnergy);
+        int maxValidDistance = (int) (0.4f * this.height);
+        int distance = min(positionY, this.height - positionY - 1);
+        if (distance >= maxValidDistance) {return 1;}
+        int demandedEnergy = max(2, (int)((float)maxMoveCost - ((float)distance / maxValidDistance * maxMoveCost)));
+
         return demandedEnergy;
     }
 

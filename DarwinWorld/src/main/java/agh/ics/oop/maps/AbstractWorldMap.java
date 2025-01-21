@@ -6,6 +6,7 @@ import agh.ics.oop.organisms.Animal;
 import agh.ics.oop.organisms.AnimalBuilder;
 import agh.ics.oop.organisms.Organism;
 import agh.ics.oop.organisms.Plant;
+import agh.ics.oop.planters.ForestedEquators;
 import agh.ics.oop.records.Vector2d;
 
 import java.util.LinkedList;
@@ -17,6 +18,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     protected WorldTile[][] map;
     protected final GeneInterpreter geneInterpreter;
     protected int plantCount;
+    protected ForestedEquators forestedEquators;
 
 
     public AbstractWorldMap(int width, int height, GeneInterpreter geneInterpreter) {
