@@ -125,8 +125,8 @@ public class Simulation implements Runnable{
         for (Animal animal : aliveAnimals) {
             totalEnergy += animal.getEnergy();
         }
-        if (aliveAnimals.size() > 0)  { return (float)totalEnergy / aliveAnimals.size();}
-        return 0;
+        if (aliveAnimals.isEmpty()) return 0
+        return (float)totalEnergy / aliveAnimals.size();
     }
 
     public float calcAvgLifespan() {
@@ -144,8 +144,8 @@ public class Simulation implements Runnable{
         for (Animal animal : aliveAnimals) {
             totalChildren += animal.getChildren().size();
         }
-        if (aliveAnimals.size() > 0) {return (float)totalChildren / aliveAnimals.size();}
-        return 0;
+        if (aliveAnimals.isEmpty()) return 0;
+        return (float)totalChildren / aliveAnimals.size();
     }
 
     public List<Animal> getAnimalsWithGivenGenome(Byte[] genome) {
@@ -161,7 +161,7 @@ public class Simulation implements Runnable{
     public void updateStats() {
         plantCount = map.getPlantCount();
         emptyTiles = map.calculateEmptyTiles();
-        mostPopularGenome = findMostPopularGenome();
+        //mostPopularGenome = findMostPopularGenome();
         avgEnergy = calcAvgEnergy();
         avgLifespan = calcAvgLifespan();
         avgChildren = calcAvgChildren();
@@ -181,7 +181,7 @@ public class Simulation implements Runnable{
 
 
     public void simulationStep(){
-        //updateStats();
+        updateStats();
         simUpdated();
 
         //1
