@@ -20,7 +20,10 @@ import java.util.Arrays;
 
 public class SimulationPresenter implements SimObserver {
 
-    private double gridSize;
+    private final static double maxGridSize = 600;
+
+    private double gridCellSize;
+
 
     @FXML
     GridPane mapGrid;
@@ -49,20 +52,21 @@ public class SimulationPresenter implements SimObserver {
 
         //region GridPane setup
         WorldMap map = simulation.getMap();
-        mapGrid.setPrefSize(600,600);
-        mapGrid.setMaxSize(600,600);
         mapGrid.setPadding(new Insets(0));
-        double cellWidth = mapGrid.getPrefWidth()/ (double)(map.getWidth());
-        double cellHeight = mapGrid.getPrefHeight()/ (double)(map.getHeight());
-        gridSize = Math.min(cellWidth,cellHeight);
+        double cellWidth = maxGridSize / (double)(map.getWidth());
+        double cellHeight = maxGridSize / (double)(map.getHeight());
+        gridCellSize = Math.min(cellWidth,cellHeight);
+
+        mapGrid.setPrefSize(gridCellSize * map.getWidth(),gridCellSize * map.getHeight());
+        mapGrid.setMaxSize(gridCellSize * map.getWidth(),gridCellSize * map.getHeight());
 
 
         for (int x = 0; x < map.getWidth(); x++){
-            mapGrid.getColumnConstraints().add(new ColumnConstraints(gridSize));
+            mapGrid.getColumnConstraints().add(new ColumnConstraints(gridCellSize));
         }
 
         for (int y = 0; y < map.getHeight(); y++){
-            mapGrid.getRowConstraints().add(new RowConstraints(gridSize));
+            mapGrid.getRowConstraints().add(new RowConstraints(gridCellSize));
         }
         //endregion
 
@@ -101,7 +105,7 @@ public class SimulationPresenter implements SimObserver {
             for (int y = 0; y < map.getHeight(); y++) {
                 Vector2d poz = new Vector2d(x, y);
                 if (!map.isFieldEmpty(poz)){
-                    DisplayCell cell = new DisplayCell(map.getAnimalAt(poz),map.getPlantAt(poz),gridSize);
+                    DisplayCell cell = new DisplayCell(map.getAnimalAt(poz),map.getPlantAt(poz),gridCellSize);
 
                     mapGrid.add(cell, x, map.getHeight() - (1 + y));
                     GridPane.setHalignment(cell, HPos.CENTER);

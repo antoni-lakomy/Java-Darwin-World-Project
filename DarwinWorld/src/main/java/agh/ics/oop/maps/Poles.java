@@ -40,7 +40,6 @@ public class Poles extends AbstractWorldMap {
         int distance = min(positionY, this.height - positionY);
         int demandedEnergy = max(1, (int)(maxMoveCost - (((float)distance * 2 / this.height) * maxMoveCost)));
         // distance * 2, because its maximal value is height / 2
-        System.out.println(demandedEnergy);
         return demandedEnergy;
     }
 
