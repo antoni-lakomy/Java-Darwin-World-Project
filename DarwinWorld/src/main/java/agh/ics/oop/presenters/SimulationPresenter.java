@@ -7,6 +7,7 @@ import agh.ics.oop.simulation.Simulation;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -19,12 +20,12 @@ import java.util.Arrays;
 
 public class SimulationPresenter implements SimObserver {
 
-    private final static int maxWidth = 400;
-    private final static int maxHeight = 400;
+    private double gridSize;
 
     @FXML
     GridPane mapGrid;
 
+    @FXML Label simulationDay;
     @FXML Label aliveAnimals;
     @FXML Label deadAnimals;
     @FXML Label avgEnergy;
@@ -45,6 +46,26 @@ public class SimulationPresenter implements SimObserver {
 
     public void setSimulation(Simulation simulation){
         this.simulation = simulation;
+
+        //region GridPane setup
+        WorldMap map = simulation.getMap();
+        mapGrid.setPrefSize(600,600);
+        mapGrid.setMaxSize(600,600);
+        mapGrid.setPadding(new Insets(0));
+        double cellWidth = mapGrid.getPrefWidth()/ (double)(map.getWidth());
+        double cellHeight = mapGrid.getPrefHeight()/ (double)(map.getHeight());
+        gridSize = Math.min(cellWidth,cellHeight);
+
+
+        for (int x = 0; x < map.getWidth(); x++){
+            mapGrid.getColumnConstraints().add(new ColumnConstraints(gridSize));
+        }
+
+        for (int y = 0; y < map.getHeight(); y++){
+            mapGrid.getRowConstraints().add(new RowConstraints(gridSize));
+        }
+        //endregion
+
     }
 
     @Override
@@ -60,6 +81,7 @@ public class SimulationPresenter implements SimObserver {
     }
 
     public synchronized void updateStatistics(Simulation simulation){
+        simulationDay.setText("Day: " + simulation.getSimulationDay());
         aliveAnimals.setText("Alive Animals: " + simulation.getAliveAnimalsSize());
         deadAnimals.setText("Dead Animals: " + simulation.getDeadAnimalsSize());
         avgEnergy.setText("Avg Energy: " + simulation.getAvgEnergy());
@@ -71,45 +93,23 @@ public class SimulationPresenter implements SimObserver {
     }
 
     public synchronized void drawMap(Simulation simulation){
-        clearGrid();
+        mapGrid.getChildren().retainAll(mapGrid.getChildren().getFirst());
         WorldMap map = simulation.getMap();
-
-        //region cellSize
-        double cellWidth = maxWidth / (double)(map.getWidth());
-        double cellHeight = maxHeight / (double)(map.getHeight());
-        cellHeight = Math.min(cellWidth,cellHeight); //Na razie są jednakowe,
-        cellWidth = Math.min(cellWidth,cellHeight);  //ale mogą być różne
-        //endregion
-
-
-        for (int x = 0; x < map.getWidth(); x++){
-            mapGrid.getColumnConstraints().add(new ColumnConstraints(cellWidth));
-        }
-
-        for (int y = 0; y < map.getHeight(); y++){
-            mapGrid.getRowConstraints().add(new RowConstraints(cellHeight));
-        }
-
 
         //region elements
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
                 Vector2d poz = new Vector2d(x, y);
-                Label label = new Label("");
                 if (!map.isFieldEmpty(poz)){
-                    label = new Label(map.getOrganismAt(poz).toString());
+                    DisplayCell cell = new DisplayCell(map.getAnimalAt(poz),map.getPlantAt(poz),gridSize);
+
+                    mapGrid.add(cell, x, map.getHeight() - (1 + y));
+                    GridPane.setHalignment(cell, HPos.CENTER);
                 }
-                mapGrid.add(label, x, map.getHeight() - (1 + y));
-                GridPane.setHalignment(label, HPos.CENTER);
+
             }
         }
         //endregion
-    }
-
-    private void clearGrid() {
-        mapGrid.getChildren().retainAll(mapGrid.getChildren().get(0)); // hack to retain visible grid lines
-        mapGrid.getColumnConstraints().clear();
-        mapGrid.getRowConstraints().clear();
     }
 
 }

@@ -33,7 +33,7 @@ public class ForestedEquators implements Planter{
         this.rng = new Random(seed);
         this.plantEnergy = plantEnergy;
         this.minEquator = 0.4f * map.getHeight();
-        this.maxEquator = 0.6f * map.getWidth();
+        this.maxEquator = 0.6f * map.getHeight();
 
         this.preferredTiles = new ArrayList<>();
         this.normalTiles = new ArrayList<>();
