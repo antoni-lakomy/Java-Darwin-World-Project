@@ -124,6 +124,7 @@ public class Simulation implements Runnable{
         for (Animal animal : aliveAnimals) {
             totalEnergy += animal.getEnergy();
         }
+        if (aliveAnimals.isEmpty()) return 0;
         return (float)totalEnergy / aliveAnimals.size();
     }
 
@@ -142,6 +143,7 @@ public class Simulation implements Runnable{
         for (Animal animal : aliveAnimals) {
             totalChildren += animal.getChildren().size();
         }
+        if (aliveAnimals.isEmpty()) return 0;
         return (float)totalChildren / aliveAnimals.size();
     }
 
@@ -158,7 +160,7 @@ public class Simulation implements Runnable{
     public void updateStats() {
         plantCount = map.getPlantCount();
         emptyTiles = map.calculateEmptyTiles();
-        mostPopularGenome = findMostPopularGenome();
+        //mostPopularGenome = findMostPopularGenome();
         avgEnergy = calcAvgEnergy();
         avgLifespan = calcAvgLifespan();
         avgChildren = calcAvgChildren();
@@ -178,7 +180,7 @@ public class Simulation implements Runnable{
 
 
     public void simulationStep(){
-        //updateStats();
+        updateStats();
         simUpdated();
 
         //1
