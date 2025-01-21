@@ -39,4 +39,21 @@ public class AnimalTest {
         //Then checking if our method counted descendants correctly, should be 4
         assertEquals(4, descendants);
     }
+
+    @Test
+    void animalWithoutDescendantsCountDescendantsTest() {
+
+        //Given created animal, with no descendants
+        AnimalBuilder builder = new AnimalBuilder();
+
+        Byte[] genome = new Byte[]{0, 1, 2, 3, 4, 5, 6, 7, 0, 7};
+
+        Animal animal = builder.buildBase(new Vector2d(2, 3), 100, genome);
+
+        //When
+        int descendants = animal.countDescendants();
+
+        //Then checking if our method counted descendants correctly, should be 0
+        assertEquals(0, descendants);
+    }
 }

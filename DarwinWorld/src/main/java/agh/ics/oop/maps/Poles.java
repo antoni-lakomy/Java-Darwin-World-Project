@@ -14,32 +14,15 @@ public class Poles extends AbstractWorldMap {
         super(width, height, geneInterpreter);
     }
 
-    public void moveAnimal(Animal animal) {
-        int energyRequired = calculateEnergy(animal.getPosition().y());
-        Vector2d moveVector = animal.activateGene(geneInterpreter, energyRequired);
-        Vector2d oldPosition = animal.getPosition();
-        Vector2d newPosition;
-        if (!animal.isSkippingMove()) {
-            newPosition = animal.getPosition().add(moveVector);
-            newPosition = boundPosition(newPosition, animal);
-        } else {
-            newPosition = oldPosition;
-            animal.setSkippingMove(false);
-        }
-
-
-        if (!map[oldPosition.x()][oldPosition.y()].removeAnimal(animal))
-            throw new NullPointerException("Animal was not present on the map");
-
-        map[newPosition.x()][newPosition.y()].addAnimal(animal);
-        animal.setPosition(newPosition);
-    }
-
-    // closer it gets to Pole, higher cost of move gets. Energy rises gradually starting at 1, up to 10.
+    // Closer it gets to Pole, higher cost of move gets, except equators, where energy required is always 1.
+    // Since an animal stepped out of the equator - its move energy rises gradually starting at 2, up to maxMoveCost.
+    @Override
     public int calculateEnergy(int positionY) {
-        int distance = min(positionY, this.height - positionY);
-        int demandedEnergy = max(1, (int)(maxMoveCost - (((float)distance * 2 / this.height) * maxMoveCost)));
-        // distance * 2, because its maximal value is height / 2
+        int maxValidDistance = (int) (0.4f * this.height);
+        int distance = min(positionY, this.height - positionY - 1);
+        if (distance >= maxValidDistance) {return 1;}
+        int demandedEnergy = max(2, (int)((float)maxMoveCost - ((float)distance / maxValidDistance * maxMoveCost)));
+
         return demandedEnergy;
     }
 
