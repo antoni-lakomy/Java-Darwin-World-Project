@@ -113,10 +113,11 @@ public class Simulation implements Runnable{
     public Byte[] findMostPopularGenome() {
         return genomeFrequency.entrySet().stream()
                 .max(Map.Entry.comparingByValue())
-                .get() // Safe to use .get() as we assume genomes are always present
-                .getKey()
-                .toArray(new Byte[0]);
+                .map(Map.Entry::getKey) // Returns Optional<Byte[]>
+                .map(genome -> genome.toArray(new Byte[0])) // Converts Optional to Array Byte[]
+                .orElse(new Byte[0]); // Returns empty array if to genomes present
     }
+
 
 
     public float calcAvgEnergy() {
@@ -124,7 +125,7 @@ public class Simulation implements Runnable{
         for (Animal animal : aliveAnimals) {
             totalEnergy += animal.getEnergy();
         }
-        if (aliveAnimals.isEmpty()) return 0;
+        if (aliveAnimals.isEmpty()) return 0
         return (float)totalEnergy / aliveAnimals.size();
     }
 

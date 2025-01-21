@@ -86,9 +86,53 @@ class SimulationStatsTest {
         Byte[] mostPopularGenome = simulation.findMostPopularGenome();
 
 
-        // Then as the result of the most popular genome we get a genome that appears the most times (2) among 3 animals.
+        // Then
         assertArrayEquals(genome1, mostPopularGenome, "Expected the most popular genome to be genome1.");
     }
+
+
+    @Test
+    void givenSimulation_whenFindMostPopularGenomeCalledWhileNoAmimals_thenReturnsEmptyArray() {
+        // Given a simulation with initial parameters (no plants at all, 1 animal), runs 100 turns (animal will be dead)
+        // Checks if most popular genome returns []
+        SimParams params2 = new SimParams(11,10,10,
+                0,0,10,
+                0,0,1,
+                30,20,10,
+                10, 0,0,4,0);
+
+        Simulation simulation = SimulationBuilder.build(params2);
+
+        for (int i = 0; i < 100; i++) {
+            simulation.simulationStep();
+        }
+
+        // When
+        Byte[] mostPopularGenome = simulation.findMostPopularGenome();
+
+        // Then
+        assertArrayEquals(new Byte[0], mostPopularGenome, "Expected the most popular genome to be genome1.");
+    }
+
+    @Test
+    void givenSimulationWithNoAnimals_whenFindMostPopularGenomeCalled_thenReturnsEmptyArray() {
+        // Given a simulation with initial parameters (no plants at all, no animals),
+        // Checks if most popular genome returns []
+        SimParams params2 = new SimParams(11,10,10,
+                0,0,10,
+                0,0,0,
+                30,20,10,
+                10, 0,0,4,0);
+
+        Simulation simulation = SimulationBuilder.build(params2);
+
+        // When
+        Byte[] mostPopularGenome = simulation.findMostPopularGenome();
+
+        // Then as the result of the most popular genome we get a genome that appears the most times (2) among 3 animals.
+        assertArrayEquals(new Byte[0], mostPopularGenome, "Expected the most popular genome to be genome1.");
+    }
+
 
     @Test
     void givenSimulation_whenCalcAvgEnergyCalled_thenReturnsCorrectAverage() {
