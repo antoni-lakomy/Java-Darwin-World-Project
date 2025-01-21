@@ -161,7 +161,28 @@ public abstract class AbstractWorldMap implements WorldMap {
 
 
 //    Divides between children classes as basic map (Globe - kula ziemska) and Poles modifier (Bieguny)
-    public abstract void moveAnimal(Animal animal);
+    public void moveAnimal(Animal animal) {
+        int energyRequired = calculateEnergy(animal.getPosition().y());
+        Vector2d moveVector = animal.activateGene(geneInterpreter,energyRequired);
+        Vector2d oldPosition = animal.getPosition();
+        Vector2d newPosition;
+        if (!animal.isSkippingMove()) {
+            newPosition = animal.getPosition().add(moveVector);
+            newPosition = boundPosition(newPosition, animal);
+        } else {
+            newPosition = oldPosition;
+            animal.setSkippingMove(false);
+        }
+
+        if (!map[oldPosition.x()][oldPosition.y()].removeAnimal(animal))
+            throw new NullPointerException("Animal was not present on the map");
+
+        map[newPosition.x()][newPosition.y()].addAnimal(animal);
+        animal.setPosition(newPosition);
+    }
+
+    public abstract int calculateEnergy(int positionY);
+
 
 
 
