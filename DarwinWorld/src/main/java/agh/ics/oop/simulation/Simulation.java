@@ -29,6 +29,8 @@ public class Simulation implements Runnable{
 
     protected int plantGrowth;
 
+    protected int simulationDay;
+
     protected Simulation(){}
 
     private final List<SimObserver> observers = new ArrayList<>();
@@ -38,6 +40,7 @@ public class Simulation implements Runnable{
     private boolean paused = false;
 
     private float timePerStep = 0.5f;
+
 
     //Precalculated statistics
     private float avgEnergy;
@@ -59,6 +62,7 @@ public class Simulation implements Runnable{
 
     public int getEmptyTiles() {return emptyTiles;}
 
+    public int getSimulationDay() {return simulationDay;}
 
     public void addObserver(SimObserver observer){
         observers.addLast(observer);
@@ -174,7 +178,7 @@ public class Simulation implements Runnable{
 
 
     public void simulationStep(){
-        updateStats();
+        //updateStats();
         simUpdated();
 
         //1
@@ -199,6 +203,8 @@ public class Simulation implements Runnable{
 
         // Update genome frequency
         updateGenomeFrequency(deadThisStep, newThisStep);
+        //advance day
+        simulationDay += 1;
     }
 
 

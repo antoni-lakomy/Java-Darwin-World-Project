@@ -18,6 +18,8 @@ public class Animal extends Organism{
 
     protected int age;
 
+    protected int dayBorn;
+
     protected int plantsEaten;
 
     protected boolean skippingMove;
@@ -39,6 +41,10 @@ public class Animal extends Organism{
     public int getEnergy() { return energy; }
 
     public int getAge() {return age; }
+
+    public int getDayBorn() {return dayBorn;}
+
+    public int getFinalDay() {return dayBorn + age;}
 
     public void setAge(int age) { this.age = age; } //for test purpose
 

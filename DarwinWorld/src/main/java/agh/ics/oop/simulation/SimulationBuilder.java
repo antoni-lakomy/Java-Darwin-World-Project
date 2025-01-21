@@ -41,6 +41,8 @@ public final class SimulationBuilder {
 
         sim.deadAnimals = new ArrayList<>();
 
+        sim.simulationDay = 0;
+
         return sim;
     }
 

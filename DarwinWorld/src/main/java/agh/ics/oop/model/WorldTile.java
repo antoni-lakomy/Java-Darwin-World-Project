@@ -49,6 +49,28 @@ public class WorldTile {
     }
 
     /**
+     * Returns the plant on this tile.
+     *
+     * @return The {@link Plant} from this tile.
+     */
+    public Plant getPlant(){
+        return plant;
+    }
+
+    /**
+     * Returns the strongest animal on this tile.
+     * If there are no animals on this tile returns null.
+     *
+     * @return The first {@link Animal} on this tile.
+     */
+    public Animal getAnimal(){
+        if (animals.isEmpty()) return null;
+        sortAnimals();
+        return animals.getFirst();
+    }
+
+
+    /**
      * Adds an animal to the tile.
      *
      * @param animal {@link Animal} to be added to the map.

@@ -45,6 +45,16 @@ public abstract class AbstractWorldMap implements WorldMap {
         return map[position.x()][position.y()].getOrganism();
     }
 
+    @Override
+    public Animal getAnimalAt(Vector2d position) {
+        return map[position.x()][position.y()].getAnimal();
+    }
+
+    @Override
+    public Plant getPlantAt(Vector2d position) {
+        return map[position.x()][position.y()].getPlant();
+    }
+
     //TODO - może obsługa postawienia tego samego zwierzaka wiele razy
     @Override
     public void addAnimal(Animal animal) {
@@ -143,6 +153,10 @@ public abstract class AbstractWorldMap implements WorldMap {
 
         return deadAnimals;
     }
+
+
+
+
 
 //    Divides between children classes as basic map (Globe - kula ziemska) and Poles modifier (Bieguny)
     public abstract void moveAnimal(Animal animal);

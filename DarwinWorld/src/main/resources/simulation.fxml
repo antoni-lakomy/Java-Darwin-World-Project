@@ -10,15 +10,16 @@
 <?import javafx.collections.FXCollections?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            minHeight="630.0" minWidth="800.0"
+            minHeight="700.0" minWidth="800.0"
             fx:controller="agh.ics.oop.presenters.SimulationPresenter">
     <padding><Insets top="10" bottom="10" right="10" left="10"/></padding>
     <center>
-        <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER">
+        <GridPane fx:id="mapGrid" style="-fx-background-color: #25C332; -fx-margin: 0px;" gridLinesVisible="true" alignment="CENTER">
         </GridPane>
     </center>
     <left>
-        <VBox>
+        <VBox alignment="CENTER_LEFT" style="-fx-border: 1px" >
+            <Label fx:id="simulationDay" text="Day: 0"/>
             <Label fx:id="aliveAnimals" text="Alive Animals: NaN"/>
             <Label fx:id="deadAnimals" text="Dead Animals: NaN"/>
             <Label fx:id="avgEnergy" text="Avg Energy: NaN"/>
