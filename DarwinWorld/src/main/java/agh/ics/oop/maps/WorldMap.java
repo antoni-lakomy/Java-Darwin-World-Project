@@ -122,6 +122,8 @@ public interface WorldMap {
      */
     List<Animal> removeDead();
 
+    int calculateEnergy(int PositionY);
+
     int calculateEmptyTiles();
 
     //Getter of plantCount attribute.

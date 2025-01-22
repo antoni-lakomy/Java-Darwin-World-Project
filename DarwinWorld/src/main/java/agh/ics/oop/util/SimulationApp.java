@@ -7,10 +7,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class SimulationApp extends Application {
@@ -40,7 +38,7 @@ public class SimulationApp extends Application {
 
     private void configureStage(Stage stage, BorderPane viewRoot, String name) {
         var scene = new Scene(viewRoot);
-        scene.getStylesheets().add(getClass().getClassLoader().getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource("style.css")).toExternalForm());
         stage.setScene(scene);
         stage.setTitle(name);
         stage.minWidthProperty().bind(viewRoot.minWidthProperty());
@@ -57,7 +55,7 @@ public class SimulationApp extends Application {
         SimulationPresenter presenter = loader.getController();
         presenter.setSimulation(simulation);
         simulation.addObserver(presenter);
-        stage.setOnCloseRequest(event -> {presenter.closeWindowEvent(event);});
+        stage.setOnCloseRequest(event -> presenter.closeWindowEvent());
 
         configureStage(stage,viewRoot,"Simulation");
         stage.show();

@@ -14,8 +14,6 @@ import java.util.Random;
 
 
 public class OldnessSadness implements  GeneInterpreter {
-    // age at which changes of skipping a move hit 80% (They stop to grow)
-    private int boundAge = 100;
 
     @Override
     public int getNextGene(Animal animal) {
@@ -28,6 +26,8 @@ public class OldnessSadness implements  GeneInterpreter {
         int animalAge = animal.getAge();
         int odds = 80;
         // calculates % part of animalAge of boundAge and decreases it by 20% to make it cap at 80%
+        // age at which changes of skipping a move hit 80% (They stop to grow)
+        int boundAge = 100;
         if (animalAge < boundAge) {
             odds = (int) (((float)animalAge / boundAge) * 100 * 0.8f);
         }

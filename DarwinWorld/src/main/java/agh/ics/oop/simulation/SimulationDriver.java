@@ -1,11 +1,9 @@
 package agh.ics.oop.simulation;
 
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-//TODO W. I. P. - jeszcze nie wiem, czy tego nie zrobić w samej symulacji
 public class SimulationDriver {
 
     ExecutorService threadPool = Executors.newFixedThreadPool(4);

@@ -4,7 +4,6 @@ import agh.ics.oop.enums.MapDirection;
 import agh.ics.oop.records.SimParams;
 import agh.ics.oop.records.Vector2d;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

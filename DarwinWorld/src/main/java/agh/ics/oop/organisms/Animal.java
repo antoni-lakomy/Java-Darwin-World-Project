@@ -42,13 +42,13 @@ public class Animal extends Organism{
 
     public int getAge() {return age; }
 
-    public int getDayBorn() {return dayBorn;}
+//    public int getDayBorn() {return dayBorn;}
 
     public int getFinalDay() {return dayBorn + age;}
 
     public void setAge(int age) { this.age = age; } //for test purpose
 
-    public List<Animal> getParents() { return parents; }
+//    public List<Animal> getParents() { return parents; }
 
     public List<Animal> getChildren() { return children;}
 
@@ -75,12 +75,10 @@ public class Animal extends Organism{
      * @return Total number of unique descendants.
      */
     public int countDescendants() {
-        Set<Animal> visited = new HashSet<>();
-        Queue<Animal> queue = new LinkedList<>();
 
         // Add direct children to the queue
-        queue.addAll(this.children);
-        visited.addAll(this.children);
+        Queue<Animal> queue = new LinkedList<>(this.children);
+        Set<Animal> visited = new HashSet<>(this.children);
 
         while (!queue.isEmpty()) {
             Animal current = queue.poll();
@@ -98,16 +96,6 @@ public class Animal extends Organism{
     }
 
 
-    public void animalStats() {
-        this.getGenome();
-        this.getCurrentGene();
-        this.getEnergy();
-        this.getPlantsEaten();
-        this.getChildren().size();
-        this.countDescendants();
-        this.getAge(); //którego dnia zmarło rozumiem jako - ile miało dni jak zmarło
-
-    }
     public void addEnergy(int energy){
         this.energy += energy;
     }

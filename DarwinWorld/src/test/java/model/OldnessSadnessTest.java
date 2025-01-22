@@ -3,8 +3,6 @@ package model;
 import agh.ics.oop.enums.MapDirection;
 import agh.ics.oop.maps.AbstractWorldMap;
 import agh.ics.oop.maps.Globe;
-import agh.ics.oop.maps.Poles;
-import agh.ics.oop.model.FullPredestination;
 import agh.ics.oop.model.GeneInterpreter;
 import agh.ics.oop.model.OldnessSadness;
 import agh.ics.oop.organisms.Animal;
@@ -49,7 +47,7 @@ class OldnessSadnessTest {
             map.moveAnimal(animal2);
         }
 
-        // Then animal1 travelled shorter distance (is currently farther from North Pole) compared to animal2 (it skipped more moves due to its age)
+        // Then animal1 travelled shorter distance (is currently farther from the North Pole) compared to animal2 (it skipped more moves due to its age)
         assertTrue(animal1.getPosition().y() < animal2.getPosition().y(), "Expected for animal1 to move less to North, because it is older, hence it is more likely to skip its move");
 
     }

@@ -9,7 +9,6 @@ import agh.ics.oop.simulation.SimulationBuilder;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 class SimulationStatsTest {
@@ -46,14 +45,14 @@ class SimulationStatsTest {
         // When
         int plantCount = simulation.getMap().getPlantCount();
 
-        // Then initializing our simulation we place 10 plants on it, then we add another 3 of them, so the plantcount should equal 13
+        // Then initializing our simulation we place 10 plants on it, then we add another 3 of them, so the plant count should equal 13
         assertEquals(13, plantCount, "Expected initial plant count to be 13.");
     }
 
     @Test
     void givenSimulation_whenCalculateEmptyTilesCalled_thenReturnsCorrectCount() {
-        // Given simulation with initial 14 empty tiles, then we add 1 animal on ampty tile, and 3 plants,
-        // one of them is being placed on tile already occupied by an animal (it doesn't decreases the amount of empty tiles)
+        // Given simulation with initial 14 empty tiles, then we add 1 animal on empty tile, and 3 plants,
+        // one of them is being placed on tile already occupied by an animal (it doesn't decrease the amount of empty tiles)
         Simulation simulation = SimulationBuilder.build(params);
         simulation.getMap().addAnimal(new Animal(new Vector2d(2,2)));
         simulation.getPlanter().plant(3);
@@ -92,7 +91,7 @@ class SimulationStatsTest {
 
 
     @Test
-    void givenSimulation_whenFindMostPopularGenomeCalledWhileNoAmimals_thenReturnsEmptyArray() {
+    void givenSimulation_whenFindMostPopularGenomeCalledWhileNoAnimals_thenReturnsEmptyArray() {
         // Given a simulation with initial parameters (no plants at all, 1 animal), runs 100 turns (animal will be dead)
         // Checks if most popular genome returns []
         SimParams params2 = new SimParams(11,10,10,
