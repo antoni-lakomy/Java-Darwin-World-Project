@@ -25,7 +25,6 @@ public class ForestedEquators implements Planter{
 
     private final float maxEquator;
 
-    public int getMinEquator() {return (int) this.minEquator;}
 
     @Override
     public List<Vector2d> getPreferredTiles() {return this.preferredTiles;}

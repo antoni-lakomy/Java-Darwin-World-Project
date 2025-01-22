@@ -4,10 +4,8 @@ import agh.ics.oop.organisms.Animal;
 import agh.ics.oop.organisms.Plant;
 import agh.ics.oop.records.Vector2d;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
@@ -27,9 +25,7 @@ public class DisplayCell extends StackPane {
 
     public DisplayCell(Animal animal, Plant plant,double size,Vector2d position, SimulationPresenter presenter){
         this(animal,plant,size);
-        setOnMouseClicked((event) -> {
-            presenter.selectAnimal(position,this);
-        });
+        setOnMouseClicked((event) -> presenter.selectAnimal(position,this));
     }
 
     private void addPlant(Plant plant, double size){
@@ -66,11 +62,11 @@ public class DisplayCell extends StackPane {
             highlight.setFill(newColor.interpolate((Color) highlight.getFill(),0.5));
         }
     }
-    public void removeCellHighlight(){
-        if (highlight == null) return;
-        getChildren().remove(highlight);
-        highlight = null;
-    }
+//    public void removeCellHighlight(){
+//        if (highlight == null) return;
+//        getChildren().remove(highlight);
+//        highlight = null;
+//    }
 
     public void addAnimalHighlight(Color color){
         animalCircle.setFill(originalColor.interpolate(color,0.5));

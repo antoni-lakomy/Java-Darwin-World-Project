@@ -1,6 +1,5 @@
 package agh.ics.oop.presenters;
 
-import agh.ics.oop.observers.ConsoleDisplay;
 import agh.ics.oop.observers.FileDisplay;
 import agh.ics.oop.records.SimParams;
 import agh.ics.oop.simulation.Simulation;
@@ -8,8 +7,6 @@ import agh.ics.oop.simulation.SimulationBuilder;
 import agh.ics.oop.simulation.SimulationDriver;
 import agh.ics.oop.util.SimulationApp;
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonWriter;
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;

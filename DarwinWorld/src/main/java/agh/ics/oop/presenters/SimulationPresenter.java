@@ -15,8 +15,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -65,7 +63,7 @@ public class SimulationPresenter implements SimObserver {
     Simulation simulation;
 
     @FXML
-    public void closeWindowEvent(WindowEvent event) {
+    public void closeWindowEvent() {
         simulation.shutDown();
     }
 

@@ -1,6 +1,5 @@
 package agh.ics.oop.observers;
 
-import agh.ics.oop.maps.WorldMap;
 import agh.ics.oop.simulation.Simulation;
 
 public interface SimObserver {

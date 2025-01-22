@@ -1,11 +1,9 @@
 package agh.ics.oop.simulation;
 
-import agh.ics.oop.maps.AbstractWorldMap;
 import agh.ics.oop.maps.WorldMap;
 import agh.ics.oop.observers.SimObserver;
 import agh.ics.oop.organisms.Animal;
 import agh.ics.oop.organisms.AnimalBuilder;
-import agh.ics.oop.planters.ForestedEquators;
 import agh.ics.oop.planters.Planter;
 
 import java.util.*;
@@ -201,7 +199,7 @@ public class Simulation implements Runnable {
     }
 
     public void visualStats() {
-        this.getAnimalsWithGivenGenome(mostPopularGenome);  //stay aware of complexity
+        this.getAnimalsWithGivenGenome(mostPopularGenome);
         planter.getPreferredTiles();
     }
 

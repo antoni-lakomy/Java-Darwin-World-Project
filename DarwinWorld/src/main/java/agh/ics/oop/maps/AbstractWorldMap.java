@@ -6,7 +6,6 @@ import agh.ics.oop.organisms.Animal;
 import agh.ics.oop.organisms.AnimalBuilder;
 import agh.ics.oop.organisms.Organism;
 import agh.ics.oop.organisms.Plant;
-import agh.ics.oop.planters.ForestedEquators;
 import agh.ics.oop.records.Vector2d;
 
 import java.util.LinkedList;
@@ -18,7 +17,6 @@ public abstract class AbstractWorldMap implements WorldMap {
     protected WorldTile[][] map;
     protected final GeneInterpreter geneInterpreter;
     protected int plantCount;
-    protected ForestedEquators forestedEquators;
 
 
     public AbstractWorldMap(int width, int height, GeneInterpreter geneInterpreter) {
@@ -57,7 +55,6 @@ public abstract class AbstractWorldMap implements WorldMap {
         return map[position.x()][position.y()].getPlant();
     }
 
-    //TODO - może obsługa postawienia tego samego zwierzaka wiele razy
     @Override
     public void addAnimal(Animal animal) {
         Vector2d poz = animal.getPosition();
@@ -160,7 +157,7 @@ public abstract class AbstractWorldMap implements WorldMap {
 
 
 
-//    Divides between children classes as basic map (Globe - kula ziemska) and Poles modifier (Bieguny)
+    @Override
     public void moveAnimal(Animal animal) {
         int energyRequired = calculateEnergy(animal.getPosition().y());
         Vector2d moveVector = animal.activateGene(geneInterpreter,energyRequired);
@@ -181,6 +178,8 @@ public abstract class AbstractWorldMap implements WorldMap {
         animal.setPosition(newPosition);
     }
 
+    //  Divides between children classes as basic map (Globe - kula ziemska) and Poles modifier (Bieguny)
+    @Override
     public abstract int calculateEnergy(int positionY);
 
 

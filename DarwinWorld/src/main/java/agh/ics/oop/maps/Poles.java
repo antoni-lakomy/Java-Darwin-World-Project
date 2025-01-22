@@ -1,14 +1,11 @@
 package agh.ics.oop.maps;
 
 import agh.ics.oop.model.GeneInterpreter;
-import agh.ics.oop.organisms.Animal;
-import agh.ics.oop.records.Vector2d;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class Poles extends AbstractWorldMap {
-    private int maxMoveCost = 10;
 
     public Poles(int width, int height, GeneInterpreter geneInterpreter) {
         super(width, height, geneInterpreter);
@@ -21,9 +18,9 @@ public class Poles extends AbstractWorldMap {
         int maxValidDistance = (int) (0.4f * this.height);
         int distance = min(positionY, this.height - positionY - 1);
         if (distance >= maxValidDistance) {return 1;}
-        int demandedEnergy = max(2, (int)((float)maxMoveCost - ((float)distance / maxValidDistance * maxMoveCost)));
 
-        return demandedEnergy;
+        int maxMoveCost = 10;
+        return max(2, (int)((float) maxMoveCost - ((float)distance / maxValidDistance * maxMoveCost)));
     }
 
 }

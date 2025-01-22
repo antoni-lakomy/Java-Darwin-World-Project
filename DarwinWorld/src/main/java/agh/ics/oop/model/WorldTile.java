@@ -106,16 +106,6 @@ public class WorldTile {
         this.plant = plant;
     }
 
-    /**
-     * Removes the plant on the tile if not already empty.
-     *
-     * @return true - if there was a plant to remove, otherwise false
-     */
-    public boolean removePlant(){
-        if (this.plant == null) return false;
-        this.plant = null;
-        return true;
-    }
 
     /**
      * Sorts the animals on the tile using {@link AnimalComparator}.

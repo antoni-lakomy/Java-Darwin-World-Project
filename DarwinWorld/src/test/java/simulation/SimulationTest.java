@@ -1,16 +1,10 @@
 package simulation;
 
-import agh.ics.oop.observers.ConsoleDisplay;
-import agh.ics.oop.observers.SimObserver;
-import agh.ics.oop.organisms.Animal;
-import agh.ics.oop.organisms.AnimalBuilder;
 import agh.ics.oop.records.SimParams;
-import agh.ics.oop.records.Vector2d;
 import agh.ics.oop.simulation.Simulation;
 import agh.ics.oop.simulation.SimulationBuilder;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
