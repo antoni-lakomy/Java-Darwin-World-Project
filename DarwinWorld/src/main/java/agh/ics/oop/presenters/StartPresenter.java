@@ -1,19 +1,26 @@
 package agh.ics.oop.presenters;
 
 import agh.ics.oop.observers.ConsoleDisplay;
+import agh.ics.oop.observers.FileDisplay;
 import agh.ics.oop.records.SimParams;
 import agh.ics.oop.simulation.Simulation;
 import agh.ics.oop.simulation.SimulationBuilder;
 import agh.ics.oop.simulation.SimulationDriver;
 import agh.ics.oop.util.SimulationApp;
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonWriter;
 import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+
+import java.io.*;
 
 
 public class StartPresenter {
@@ -68,6 +75,12 @@ public class StartPresenter {
     @FXML
     private TextField animalMaxMutationField;
 
+    @FXML
+    private TextField saveFileName;
+
+    @FXML
+    private CheckBox saveToCSV;
+
     long seed;
 
     int mapHeight;
@@ -94,6 +107,8 @@ public class StartPresenter {
     private Stage stage;
 
     SimulationDriver driver = new SimulationDriver();
+
+    Gson gson = new Gson();
 
     public void setUp(SimulationApp app, Stage stage) {
         this.app = app;
@@ -165,6 +180,28 @@ public class StartPresenter {
         animalBehaviourType = animalBehaviourTypeField.getItems().indexOf(animalBehaviourTypeField.getValue());
     }
 
+    private void writeData(SimParams params){
+        seedField.setText(Long.toString(params.seed()));
+
+        mapHeightField.setText(Integer.toString(params.mapHeight()));
+        mapWidthField.setText(Integer.toString(params.mapWidth()));
+        mapTypeField.setValue(mapTypeField.getItems().get(params.mapType()));
+
+        plantStartNumberField.setText(Integer.toString(params.plantStartNumber()));
+        plantEnergyField.setText(Integer.toString(params.plantEnergy()));
+        plantGrowthField.setText(Integer.toString(params.plantGrowth()));
+
+        animalStartNumberField.setText(Integer.toString(params.animalStartNumber()));
+        animalStartEnergyField.setText(Integer.toString(params.animalStartEnergy()));
+        animalFedThresholdField.setText(Integer.toString(params.animalFedThreshold()));
+        animalReproductionCostField.setText(Integer.toString(params.animalReproductionCost()));
+        animalGenomeLengthField.setText(Integer.toString(params.animalGenomeLength()));
+        animalMinMutationField.setText(Integer.toString(params.animalMinMutation()));
+        animalMaxMutationField.setText(Integer.toString(params.animalMaxMutation()));
+        animalBehaviourTypeField.setValue(animalBehaviourTypeField.getItems().get(params.animalBehaviourType()));
+    }
+
+
     private SimParams createSimParams(){
         return new SimParams(
                 seed,
@@ -193,13 +230,61 @@ public class StartPresenter {
             SimParams parameters = createSimParams();
             Simulation simulation = SimulationBuilder.build(parameters);
 
+            if (saveToCSV.isSelected()){
+                FileDisplay csvSaving = new FileDisplay();
+                simulation.addObserver(csvSaving);
+            }
+
             app.startSimulation(simulation);
             driver.addToThePool(simulation);
 
         } catch (Exception e){
-            displayPopup(e.getMessage(),Paint.valueOf("red"));
+            displayPopup(e.getMessage(),Color.RED);
         }
     }
+
+    public void loadConfiguration(){
+        try {
+            if (saveFileName.getText().isEmpty())
+                throw  new IllegalArgumentException("Configuration name can't be blank");
+
+            File confFile = new File(saveFileName.getText() + ".json");
+            if (!confFile.isFile())
+                throw  new IllegalArgumentException("Configuration by that name doesn't exist");
+
+            SimParams params = null;
+            try(FileReader reader = new FileReader(confFile)){
+               if (reader.ready()){
+                   params = gson.fromJson(reader,SimParams.class);
+               }
+            }
+            if (params == null) throw new IOException("The file couldn't be read");
+            writeData(params);
+            displayPopup("Configuration loaded from " + saveFileName.getText() + ".json",Color.GRAY);
+        } catch (Exception e){
+            displayPopup(e.getMessage(), Color.RED);
+        }
+    }
+
+    public void saveConfiguration(){
+        try {
+            if (saveFileName.getText().isEmpty())
+                throw  new IllegalArgumentException("Configuration name can't be blank");
+            verifyData();
+            SimParams params = createSimParams();
+            String paramsJSON = gson.toJson(params);
+
+            File confFile = new File(saveFileName.getText()+".json");
+            try (FileWriter writer = new FileWriter(confFile)){
+                writer.write(paramsJSON);
+            }
+            displayPopup("Configuration saved to " + saveFileName.getText() + ".json",Color.GRAY);
+        } catch (Exception e){
+            displayPopup(e.getMessage(), Color.RED);
+        }
+
+    }
+
 
     public void exit(){
         driver.shutdownThePool();

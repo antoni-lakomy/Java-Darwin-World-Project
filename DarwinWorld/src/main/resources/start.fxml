@@ -10,7 +10,7 @@
 <?import javafx.collections.FXCollections?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            minHeight="630.0" minWidth="400.0"
+            minHeight="730.0" minWidth="400.0"
             fx:controller="agh.ics.oop.presenters.StartPresenter">
     <padding><Insets top="10" bottom="10" right="10" left="10"/></padding>
     <center>
@@ -142,10 +142,29 @@
                 <TextField fx:id="animalMaxMutationField"/>
             </HBox>
 
-
-
+            <HBox styleClass="categoryLabels" alignment="CENTER" spacing="3">
+                <Label>Save to csv:</Label>
+                <CheckBox fx:id="saveToCSV"/>
+            </HBox>
             <Button onAction="#onSimulationStartClicked" text="Start" alignment="CENTER">
             </Button>
+
+            <Label styleClass="categoryLabels" alignment="CENTER" textFill="black">
+                Configurations
+            </Label>
+            <HBox styleClass="individualBoxes">
+                <Label>Configuration File:</Label>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="saveFileName" promptText="Conf_Name"/>
+            </HBox>
+            <HBox styleClass="individualBoxes">
+                <Button onAction="#loadConfiguration" text="Load" alignment="CENTER">
+                </Button>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <Button onAction="#saveConfiguration" text="Save" alignment="CENTER">
+                </Button>
+            </HBox>
+
 
 
 

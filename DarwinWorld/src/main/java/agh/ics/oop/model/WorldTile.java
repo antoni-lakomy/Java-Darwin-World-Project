@@ -133,7 +133,7 @@ public class WorldTile {
     /**
      * Removes the dead animals from this tile.
      *
-     * @return A list of the remove animals.
+     * @return A list of the removed animals.
      */
     public List<Animal> removeDeadAnimals(){
         sortAnimals();
