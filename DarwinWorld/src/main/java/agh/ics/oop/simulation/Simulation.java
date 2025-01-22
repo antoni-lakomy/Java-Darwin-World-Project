@@ -38,7 +38,7 @@ public class Simulation implements Runnable {
 
     private boolean shutDown = false;
 
-    private boolean paused = false;
+    private boolean paused = true;
 
     private float timePerStep = 0.5f;
 
@@ -201,7 +201,7 @@ public class Simulation implements Runnable {
     }
 
     public void visualStats() {
-        this.getAnimalsWithGivenGenome(findMostPopularGenome());  //stay aware of complexity
+        this.getAnimalsWithGivenGenome(mostPopularGenome);  //stay aware of complexity
         planter.getPreferredTiles();
     }
 
@@ -214,9 +214,6 @@ public class Simulation implements Runnable {
 
 
     public void simulationStep(){
-        updateStats();
-        simUpdated();
-
         //1
         List<Animal> deadThisStep = map.removeDead();
         aliveAnimals.removeAll(deadThisStep);
@@ -241,6 +238,9 @@ public class Simulation implements Runnable {
         updateGenomeFrequency(deadThisStep, newThisStep);
         //advance day
         simulationDay += 1;
+
+        updateStats();
+        simUpdated();
     }
 
 
